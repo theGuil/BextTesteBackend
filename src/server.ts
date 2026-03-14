@@ -1,0 +1,35 @@
+import express, { Request, Response } from 'express';
+import helpers from './helpers/helpers';
+
+
+// ROTAS
+import router_usuario from './router/router_usuario';
+
+// DOC
+import swagger_router from './documentation/swagger';
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.use(express.json());
+
+app.use(swagger_router);
+
+app.use(router_usuario);
+
+app.get('/api/test', (req: Request, res: Response) => {
+    helpers.set_response.res.SUCCESS({ res, message: "Sucesso ao rodar api!", results: [] });
+});
+
+app.use((err: any, req: Request, res: Response, next: any) => {
+    return helpers.set_response.res.SERVER_ERROR({ error: err, res });
+});
+
+
+helpers.db_mongoose_start()
+
+app.listen(PORT, () => {
+    console.log(`Servidor BextTeste rodando na porta: ${PORT}`);
+    console.log(`Documentação disponível em: http://localhost:${PORT}/docs`);
+});
+
