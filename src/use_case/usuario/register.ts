@@ -1,6 +1,6 @@
 
 import t from "../../types/entidades"
-import { model_usuario } from "../../model/model_usuario"
+import model_usuario from "../../model/model_usuario"
 import helpers from "../../helpers/helpers"
 import domain_usuario from "../../domain/usuario"
 

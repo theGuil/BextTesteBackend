@@ -6,7 +6,7 @@ namespace TypesUsuario {
         _id: z4.string(),
         name: z4.string().min(3),
         email: z4.email(),
-        password: z4.string().min(6),
+        password: z4.string(),
         createdAt: z4.date(),
     })
 
@@ -20,7 +20,11 @@ namespace TypesUsuario {
                 usuario: z4.object({
                     name: z4.string().min(3),
                     email: z4.email(),
-                    password: z4.string().min(6),
+                    password: z4.string()
+                        .min(8, { message: "A senha deve ter no mínimo 8 caracteres" })
+                        .regex(/[A-Z]/, { message: "A senha deve conter pelo menos uma letra maiúscula" })
+                        .regex(/[0-9]/, { message: "A senha deve conter pelo menos um número" })
+                        .regex(/[^a-zA-Z0-9]/, { message: "A senha deve conter pelo menos um caractere especial" }),
                 }),
             }),
         }).strict();
@@ -41,7 +45,7 @@ namespace TypesUsuario {
             data: z4.object({
                 usuario: z4.object({
                     email: z4.email(),
-                    password: z4.string().min(6),
+                    password: z4.string(),
                 }),
             }),
         }).strict();

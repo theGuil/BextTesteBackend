@@ -1,7 +1,7 @@
 import { test, describe, before, after } from 'node:test';
 import assert from 'node:assert';
 import use_case_usuario_register from './register';
-import { model_usuario } from '../../model/model_usuario';
+import model_usuario from '../../model/model_usuario';
 import helpers from '../../helpers/helpers';
 
 describe('TESTE_INTEGRACAO: use_case_usuario_register', () => {
@@ -15,7 +15,7 @@ describe('TESTE_INTEGRACAO: use_case_usuario_register', () => {
         const set_usuario = {
             name: 'Guilherme Souza',
             email: `teste_${Date.now()}@galio.com.br`,
-            password: 'password123'
+            password: 'Apassword123@1'
         }
 
         const result = await new use_case_usuario_register({
@@ -29,6 +29,8 @@ describe('TESTE_INTEGRACAO: use_case_usuario_register', () => {
         assert.ok(result.data.usuario._id, 'A senha deve existir no banco');
 
         assert.strictEqual(result.data.usuario.email, set_usuario.email);
+
+        assert.strictEqual((result.data.usuario as any).password, undefined, 'O campo password não deve ser retornado no output do register');
 
         assert.strictEqual(result.data.usuario.name, set_usuario.name);
 
@@ -45,18 +47,36 @@ describe('TESTE_INTEGRACAO: use_case_usuario_register', () => {
         assert.strictEqual(usuario_pos_deletar, null, 'O usuário deve ser nulo após a deleção');
     });
 
-    test('deve lançar erro de validação ao enviar dados incompletos (Zod)', () => {
-        const input_incompleto = {
-            data: {
-                usuario: {
-                    name: 'G'
-                }
-            }
-        };
+    test('deve validar requisitos de senha forte (sucesso e falha)', () => {
+        const cenarios_senha = [
+            { password_test: '1234567', erro: true },
+            { password_test: 'semmaiuscula12', erro: true },
+            { password_test: 'SemNumero!', erro: true },
+            { password_test: 'SemEspecial123', erro: true },
+            { password_test: 'SenhaForte123!', erro: false }
+        ];
 
-        assert.throws(() => {
-            new use_case_usuario_register(input_incompleto as any)
-        });
+        for (const item of cenarios_senha) {
+            const input = {
+                data: {
+                    usuario: {
+                        name: 'Guilherme Souza',
+                        email: 'teste@galio.com.br',
+                        password: item.password_test
+                    }
+                }
+            };
+
+            if (item.erro === true) {
+                assert.throws(() => {
+                    new use_case_usuario_register(input);
+                });
+            } else {
+                assert.doesNotThrow(() => {
+                    new use_case_usuario_register(input);
+                });
+            }
+        }
     });
     after(async () => {
         await helpers.db.stop();

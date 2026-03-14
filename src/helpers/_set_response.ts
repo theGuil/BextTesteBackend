@@ -1,39 +1,25 @@
 import { Response } from 'express';
 import z4 from "zod/v4";
 
-type ResponseStatus = 200 | 201 | 400 | 401 | 404;
-type ResponseCode = "SUCCESS" | "CREATED" | "WARNING" | "ERROR" | "DOMAIN_ERROR" | "UNAUTHORIZED" | "NOT_FOUND" | "DB_ERROR" | "SCHEMA_VALIDATION"
-type ResponseType = "success" | "warning" | "error";
+import t from '../types/entidades';
 
-interface Payload {
-    status: ResponseStatus;
-    code: ResponseCode;
-    type: ResponseType;
-    message: string;
-    results: any;
-}
-
-interface ResponseParams {
-    res: Response;
-    message?: string;
-    results?: any;
-}
+type ResponseType = t.Geral.Res.ResponseType
 
 const set_response = new class {
     public res = new class {
-        public SUCCESS({ res, message, results }: ResponseParams) {
-            const payload: Payload = {
+        public SUCCESS({ res, message, results }: t.Geral.Res.ResponseParams) {
+            const payload: t.Geral.Res.Payload = {
                 status: 200,
                 code: "SUCCESS",
                 type: "success",
                 message: message || "Realizado com sucesso!",
                 results: results || [],
             };
-            return res.status(200).json(payload);
+            return res.status(payload.status).json(payload);
         }
 
-        public CREATED({ res, message, results }: ResponseParams) {
-            const payload: Payload = {
+        public CREATED({ res, message, results }: t.Geral.Res.ResponseParams) {
+            const payload: t.Geral.Res.Payload = {
                 status: 201,
                 code: "CREATED",
                 type: "success",
@@ -43,8 +29,8 @@ const set_response = new class {
             return res.status(201).json(payload);
         }
 
-        public WARNING({ res, message, results }: ResponseParams) {
-            const payload: Payload = {
+        public WARNING({ res, message, results }: t.Geral.Res.ResponseParams) {
+            const payload: t.Geral.Res.Payload = {
                 status: 400,
                 code: "WARNING",
                 type: "warning",
@@ -56,7 +42,7 @@ const set_response = new class {
 
         public SERVER_ERROR({ error, res }: { error: any, res: Response }) {
             if (error instanceof z4.ZodError) {
-                const payload: Payload = {
+                const payload: t.Geral.Res.Payload = {
                     status: 400,
                     code: "SCHEMA_VALIDATION",
                     type: "warning",
@@ -66,7 +52,7 @@ const set_response = new class {
                 return res.status(400).json(payload);
             }
 
-            const payload: Payload = {
+            const payload: t.Geral.Res.Payload = {
                 status: error?.status || 500,
                 code: error?.code || "SERVER_ERROR",
                 type: (error?.type as ResponseType) || "error",
@@ -79,8 +65,8 @@ const set_response = new class {
     }
 
     public err = new class {
-        public ERROR({ message, results }: Omit<ResponseParams, "res">) {
-            const payload: Payload = {
+        public ERROR({ message, results }: Omit<t.Geral.Res.ResponseParams, "res">) {
+            const payload: t.Geral.Res.Payload = {
                 status: 400,
                 code: "ERROR",
                 type: "error",
@@ -90,8 +76,8 @@ const set_response = new class {
             throw payload;
         }
 
-        public DOMAIN_ERROR({ message, results }: Omit<ResponseParams, "res">) {
-            const payload: Payload = {
+        public DOMAIN_ERROR({ message, results }: Omit<t.Geral.Res.ResponseParams, "res">) {
+            const payload: t.Geral.Res.Payload = {
                 status: 400,
                 code: "DOMAIN_ERROR",
                 type: "error",
@@ -101,8 +87,8 @@ const set_response = new class {
             throw payload;
         }
 
-        public UNAUTHORIZED({ message }: Omit<ResponseParams, "res">) {
-            const payload: Payload = {
+        public UNAUTHORIZED({ message }: Omit<t.Geral.Res.ResponseParams, "res">) {
+            const payload: t.Geral.Res.Payload = {
                 status: 401,
                 code: "UNAUTHORIZED",
                 type: "error",
@@ -112,8 +98,8 @@ const set_response = new class {
             throw payload;
         }
 
-        public NOT_FOUND({ message }: Omit<ResponseParams, "res">) {
-            const payload: Payload = {
+        public NOT_FOUND({ message }: Omit<t.Geral.Res.ResponseParams, "res">) {
+            const payload: t.Geral.Res.Payload = {
                 status: 404,
                 code: "NOT_FOUND",
                 type: "error",
@@ -123,8 +109,8 @@ const set_response = new class {
             throw payload;
         }
 
-        public DB_ERROR({ message }: Omit<ResponseParams, "res">) {
-            const payload: Payload = {
+        public DB_ERROR({ message }: Omit<t.Geral.Res.ResponseParams, "res">) {
+            const payload: t.Geral.Res.Payload = {
                 status: 404,
                 code: "DB_ERROR",
                 type: "error",

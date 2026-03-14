@@ -4,13 +4,11 @@ import t from "../types/entidades";
 
 
 
-export class model_usuario {
+export default class model_usuario {
 
     static async buscar_pelo_email(props: { email: string }): Promise<t.Entidades.Usuario.Base> {
         try {
-            const projecao_exclusao = { password: 0, __v: 0 } as const;
-
-            const results = await schema_usuario.findOne({ email: props.email }).select(projecao_exclusao).lean<t.Entidades.Usuario.Base>();
+            const results = await schema_usuario.findOne({ email: props.email }).lean<t.Entidades.Usuario.Base>();
 
             return results;
         } catch (error) {
