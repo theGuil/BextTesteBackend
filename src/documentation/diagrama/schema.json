@@ -1,0 +1,20 @@
+{
+    "tables": [
+        {
+            "name": "usuarios",
+            "comment": "Tabela de usuários do sistema",
+            "columns": [
+                { "name": "_id", "type": "objectId", "isPrimaryKey": true, "notNull": true, "default": null, "check": null, "comment": null },
+                { "name": "name", "type": "string", "isPrimaryKey": false, "notNull": true, "default": null, "check": null, "comment": null },
+                { "name": "email", "type": "string", "isPrimaryKey": false, "isUnique": true, "notNull": true, "default": null, "check": null, "comment": null },
+                { "name": "password", "type": "string", "isPrimaryKey": false, "notNull": true, "default": null, "check": null, "comment": null },
+                { "name": "address", "type": "jsonb", "isPrimaryKey": false, "notNull": false, "default": "'{}'", "check": null, "comment": "Campos: rua, numero, cep" },
+                { "name": "createdAt", "type": "datetime", "isPrimaryKey": false, "notNull": true, "default": "now()", "check": null, "comment": null }
+            ],
+            "indexes": [],
+            "constraints": []
+        }
+    ],
+    "enums": [],
+    "extensions": []
+}

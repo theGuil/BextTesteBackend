@@ -1,7 +1,9 @@
 import express, { Request, Response } from 'express';
 import helpers from './helpers/helpers';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // ROTAS
 import router_usuario from './router/router_usuario';
 
@@ -17,6 +19,9 @@ app.use(swagger_router);
 
 app.use(router_usuario);
 
+app.use('/erd', express.static(path.join(__dirname, '../dist/erd')));
+
+
 app.get('/api/test', (req: Request, res: Response) => {
     helpers.set_response.res.SUCCESS({ res, message: "Sucesso ao rodar api!", results: [] });
 });
@@ -30,6 +35,7 @@ helpers.db_mongoose_start()
 
 app.listen(PORT, () => {
     console.log(`Servidor BextTeste rodando na porta: ${PORT}`);
-    console.log(`Documentação disponível em: http://localhost:${PORT}/docs`);
+    console.log(`Documentação API em: http://localhost:${PORT}/docs`);
+    console.log(`Documentação ERD em: http://localhost:${PORT}/erd?showMode=ALL_FIELDS`);
 });
 
