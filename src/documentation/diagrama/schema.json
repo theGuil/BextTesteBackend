@@ -1,20 +1,92 @@
 {
-    "tables": [
-        {
+    "tables": {
+        "usuarios": {
             "name": "usuarios",
-            "comment": "Tabela de usuários do sistema",
-            "columns": [
-                { "name": "_id", "type": "objectId", "isPrimaryKey": true, "notNull": true, "default": null, "check": null, "comment": null },
-                { "name": "name", "type": "string", "isPrimaryKey": false, "notNull": true, "default": null, "check": null, "comment": null },
-                { "name": "email", "type": "string", "isPrimaryKey": false, "isUnique": true, "notNull": true, "default": null, "check": null, "comment": null },
-                { "name": "password", "type": "string", "isPrimaryKey": false, "notNull": true, "default": null, "check": null, "comment": null },
-                { "name": "address", "type": "jsonb", "isPrimaryKey": false, "notNull": false, "default": "'{}'", "check": null, "comment": "Campos: rua, numero, cep" },
-                { "name": "createdAt", "type": "datetime", "isPrimaryKey": false, "notNull": true, "default": "now()", "check": null, "comment": null }
-            ],
-            "indexes": [],
-            "constraints": []
+            "comment": "Tabela de usuarios do sistema",
+            "columns": {
+                "_id": { "name": "_id", "type": "objectId", "notNull": true, "default": null, "check": null, "comment": null },
+                "name": { "name": "name", "type": "string", "notNull": true, "default": null, "check": null, "comment": null },
+                "email": { "name": "email", "type": "string", "notNull": true, "default": null, "check": null, "comment": null },
+                "password": { "name": "password", "type": "string", "notNull": true, "default": null, "check": null, "comment": null },
+                "createdAt": { "name": "createdAt", "type": "datetime", "notNull": true, "default": "now()", "check": null, "comment": null }
+            },
+            "indexes": {},
+            "constraints": {
+                "pk_usuarios": {
+                    "type": "PRIMARY KEY",
+                    "name": "pk_usuarios",
+                    "columnNames": ["_id"]
+                }
+            }
+        },
+        "listas": {
+            "name": "listas",
+            "comment": "Tabela de listas de tarefas",
+            "columns": {
+                "_id": { "name": "_id", "type": "objectId", "notNull": true, "default": null, "check": null, "comment": null },
+                "usuario_id": { "name": "usuario_id", "type": "objectId", "notNull": true, "default": null, "check": null, "comment": null },
+                "nome": { "name": "nome", "type": "string", "notNull": true, "default": null, "check": null, "comment": null },
+                "createdAt": { "name": "createdAt", "type": "datetime", "notNull": true, "default": "now()", "check": null, "comment": null }
+            },
+            "indexes": {},
+            "constraints": {
+                "pk_listas": {
+                    "type": "PRIMARY KEY",
+                    "name": "pk_listas",
+                    "columnNames": ["_id"]
+                },
+                "fk_listas_usuario": {
+                    "type": "FOREIGN KEY",
+                    "name": "fk_listas_usuario",
+                    "columnNames": ["usuario_id"],
+                    "targetTableName": "usuarios",
+                    "targetColumnNames": ["_id"],
+                    "updateConstraint": "NO_ACTION",
+                    "deleteConstraint": "NO_ACTION"
+                }
+            }
+        },
+        "tarefas": {
+            "name": "tarefas",
+            "comment": "Tabela de tarefas",
+            "columns": {
+                "_id": { "name": "_id", "type": "objectId", "notNull": true, "default": null, "check": null, "comment": null },
+                "titulo": { "name": "titulo", "type": "string", "notNull": true, "default": null, "check": null, "comment": null },
+                "descricao": { "name": "descricao", "type": "string", "notNull": true, "default": null, "check": null, "comment": null },
+                "status": { "name": "status", "type": "string", "notNull": true, "default": "'pendente'", "check": null, "comment": null },
+                "data_vencimento": { "name": "data_vencimento", "type": "datetime", "notNull": true, "default": null, "check": null, "comment": null },
+                "lista_id": { "name": "lista_id", "type": "objectId", "notNull": true, "default": null, "check": null, "comment": null },
+                "usuario_id": { "name": "usuario_id", "type": "objectId", "notNull": true, "default": null, "check": null, "comment": null },
+                "createdAt": { "name": "createdAt", "type": "datetime", "notNull": true, "default": "now()", "check": null, "comment": null }
+            },
+            "indexes": {},
+            "constraints": {
+                "pk_tarefas": {
+                    "type": "PRIMARY KEY",
+                    "name": "pk_tarefas",
+                    "columnNames": ["_id"]
+                },
+                "fk_tarefas_usuario": {
+                    "type": "FOREIGN KEY",
+                    "name": "fk_tarefas_usuario",
+                    "columnNames": ["usuario_id"],
+                    "targetTableName": "usuarios",
+                    "targetColumnNames": ["_id"],
+                    "updateConstraint": "NO_ACTION",
+                    "deleteConstraint": "NO_ACTION"
+                },
+                "fk_tarefas_lista": {
+                    "type": "FOREIGN KEY",
+                    "name": "fk_tarefas_lista",
+                    "columnNames": ["lista_id"],
+                    "targetTableName": "listas",
+                    "targetColumnNames": ["_id"],
+                    "updateConstraint": "NO_ACTION",
+                    "deleteConstraint": "NO_ACTION"
+                }
+            }
         }
-    ],
-    "enums": [],
-    "extensions": []
+    },
+    "enums": {},
+    "extensions": {}
 }
