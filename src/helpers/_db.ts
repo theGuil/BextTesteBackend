@@ -2,20 +2,40 @@ import mongoose from 'mongoose';
 
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/BextTesteGuilherme';
 
-const _db = async () => {
-    if (mongoose.connection.readyState >= 1) return;
+class DB {
+    private uri: string = MONGODB_URI;
 
-    try {
-        await mongoose.connect(MONGODB_URI, {
-            maxPoolSize: 10,
-            serverSelectionTimeoutMS: 5000,
-        });
+    public async start(): Promise<void> {
+        if (mongoose.connection.readyState >= 1) return;
 
-        console.log('✅ MongoDB conectado com sucesso!');
-    } catch (error) {
-        console.error('❌ Erro na conexão:', error);
-        process.exit(1);
+        try {
+            await mongoose.connect(this.uri, {
+                maxPoolSize: 10,
+                serverSelectionTimeoutMS: 5000,
+            });
+            console.log('✅ MongoDB conectado');
+        } catch (error) {
+            console.error('❌ Erro:', error);
+            if (process.env.NODE_ENV === 'test') throw error;
+            process.exit(1);
+        }
     }
-};
 
-export default _db
+    public async stop(): Promise<void> {
+        if (mongoose.connection.readyState !== 0) {
+            await mongoose.connection.close();
+        }
+    }
+
+    public async clear(): Promise<void> {
+        if (mongoose.connection.readyState !== 1) return;
+        const collections = mongoose.connection.collections;
+        for (const key in collections) {
+            await collections[key].deleteMany({});
+        }
+    }
+}
+
+const _db = new DB();
+
+export default _db;

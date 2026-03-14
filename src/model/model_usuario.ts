@@ -36,4 +36,12 @@ export class model_usuario {
             helpers.set_response.err.DB_ERROR({ message: "Erro ao registrar usuário!" });
         }
     }
+
+    static async deletar_pelo_id(props: { id: string }): Promise<void> {
+        try {
+            await schema_usuario.findByIdAndDelete(props.id);
+        } catch (error) {
+            helpers.set_response.err.DB_ERROR({ message: "Erro ao deletar usuário pelo ID!" });
+        }
+    }
 }

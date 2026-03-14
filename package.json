@@ -4,9 +4,10 @@
     "version": "0.1.0",
     "type": "module",
     "scripts": {
+        "dbml": "npx @liam-hq/cli erd build --format liam --input src/documentation/diagrama/schema.json --output-dir dist/erd",
+        "test": "node --test --env-file=.env --import tsx/esm 'src/**/*.test.ts'",
         "dev": "node --watch --env-file=.env --import tsx src/server.ts",
         "build": "tsc -p tsconfig.json",
-        "dbml": "npx @liam-hq/cli erd build --format liam --input src/documentation/diagrama/schema.json --output-dir dist/erd",
         "start": "node dist/server.js"
     },
     "dependencies": {

@@ -19,7 +19,7 @@ app.use(swagger_router);
 
 app.use(router_usuario);
 
-app.use('/erd', express.static(path.join(__dirname, '../dist/erd')));
+app.use('/docs/erd', express.static(path.join(__dirname, '../dist/erd')));
 
 
 app.get('/api/test', (req: Request, res: Response) => {
@@ -31,11 +31,11 @@ app.use((err: any, req: Request, res: Response, next: any) => {
 });
 
 
-helpers.db_mongoose_start()
+helpers.db.start()
 
 app.listen(PORT, () => {
     console.log(`Servidor BextTeste rodando na porta: ${PORT}`);
-    console.log(`Documentação API em: http://localhost:${PORT}/docs`);
-    console.log(`Documentação ERD em: http://localhost:${PORT}/erd?showMode=ALL_FIELDS`);
+    console.log(`Documentação API em: http://localhost:${PORT}/docs/api`);
+    console.log(`Documentação ERD em: http://localhost:${PORT}/docs/erd?showMode=ALL_FIELDS`);
 });
 

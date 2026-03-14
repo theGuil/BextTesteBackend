@@ -34,13 +34,13 @@ const getDefinition = () => {
     });
 };
 
-swagger_router.get("/openapi.json", (req: Request, res: Response) => {
+swagger_router.get("/docs/openapi.json", (req: Request, res: Response) => {
     res.json(getDefinition());
 });
 
 
-swagger_router.use("/docs", swaggerUi.serve);
-swagger_router.get("/docs", (req: Request, res: Response) => {
+swagger_router.use("/docs/api", swaggerUi.serve);
+swagger_router.get("/docs/api", (req: Request, res: Response) => {
     res.send(swaggerUi.generateHTML(getDefinition()));
 });
 

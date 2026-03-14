@@ -10,7 +10,7 @@ const helpers = {
 
     set_response: _set_response,
 
-    db_mongoose_start: _db,
+    db: _db,
 
 }
 
