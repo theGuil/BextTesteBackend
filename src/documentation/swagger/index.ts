@@ -4,6 +4,8 @@ import { Router, Request, Response } from "express";
 import package_json from "../../../package.json"
 
 import { registerUsuarioRoutes } from "./_open_api_usuario";
+import { registerListaRoutes } from "./_open_api_lista";
+import { registerTarefaRoutes } from "./_open_api_tarefa";
 
 const swagger_router = Router();
 const registry = new OpenAPIRegistry();
@@ -14,9 +16,9 @@ registry.registerComponent("securitySchemes", "BearerAuth", {
     bearerFormat: "JWT"
 });
 
-
 registerUsuarioRoutes(registry);
-
+registerListaRoutes(registry);
+registerTarefaRoutes(registry);
 
 const getDefinition = () => {
     const generator = new OpenApiGeneratorV3(registry.definitions);
@@ -24,7 +26,7 @@ const getDefinition = () => {
         openapi: "3.0.0",
         info: {
             title: package_json.name,
-            description: "API responsável pelo login e registro de usuários.",
+            description: "API responsável pela gestão de usuários, listas e tarefas.",
             version: package_json.version,
         },
         servers: [
@@ -37,7 +39,6 @@ const getDefinition = () => {
 swagger_router.get("/docs/openapi.json", (req: Request, res: Response) => {
     res.json(getDefinition());
 });
-
 
 swagger_router.use("/docs/api", swaggerUi.serve);
 swagger_router.get("/docs/api", (req: Request, res: Response) => {

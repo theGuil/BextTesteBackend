@@ -4,8 +4,6 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-// ROTAS
-import router_usuario from './router/router_usuario';
 
 // DOC
 import swagger_router from './documentation/swagger';
@@ -17,7 +15,13 @@ app.use(express.json());
 
 app.use(swagger_router);
 
+import router_usuario from './router/router_usuario';
+import router_lista from './router/router_lista';
+import router_tarefa from './router/router_tarefa';
+
 app.use(router_usuario);
+app.use(router_lista);
+app.use(router_tarefa);
 
 app.use('/docs/erd', express.static(path.join(__dirname, '../dist/erd')));
 

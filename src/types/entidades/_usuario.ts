@@ -12,6 +12,8 @@ namespace TypesUsuario {
 
     export type Base = z4.infer<typeof schemaBase>;
 
+    export type UsuarioAuth = Pick<Base, '_id' | 'name' | "email" | 'createdAt'>
+
     export namespace Register {
         export const route = "/api/usuario/register" as const;
 

@@ -1,14 +1,19 @@
 
 
-import TypesUsuario from "./_usuario";
 import { Response } from "express"
 
-
+// ENTIDADES
+import TypesUsuario from "./_usuario";
+import TypesLista from "./_lista";
+import TypesTarefa from "./_tarefa";
 
 namespace t {
     export namespace Entidades {
         export import Usuario = TypesUsuario;
 
+        export import Lista = TypesLista;
+
+        export import Tarefa = TypesTarefa;
     }
 
     export namespace Geral {

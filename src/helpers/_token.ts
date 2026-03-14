@@ -16,7 +16,7 @@ export class Token {
             if (!token) return set_response.res.WARNING({ res, message: 'Acesso negado!' });
 
             const secret = new TextEncoder().encode(token_secret);
-            const { payload } = await jose.jwtVerify(token, secret) as { payload: t.Entidades.Usuario.Base };
+            const { payload } = await jose.jwtVerify(token, secret) as { payload: t.Entidades.Usuario.UsuarioAuth };
 
             if (!payload._id || !payload.email) {
                 return set_response.res.WARNING({ res, message: 'Token inválido!' });
@@ -29,13 +29,13 @@ export class Token {
         }
     }
 
-    public async criar_token_login_usuario(usuario: Omit<t.Entidades.Usuario.Base, 'password'>): Promise<string> {
+    public async criar_token_login_usuario(usuario: t.Entidades.Usuario.UsuarioAuth): Promise<string> {
         if (!token_secret) {
             set_response.err.ERROR({ message: "Erro configuração token_secret!" });
         }
 
         const token = await new jose.SignJWT({
-            _id: usuario._id,
+            _id: usuario._id.toString(),
             email: usuario.email,
             name: usuario.name,
             createdAt: usuario.createdAt

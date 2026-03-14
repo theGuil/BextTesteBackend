@@ -2,7 +2,7 @@
 import t from "../../types/entidades"
 import model_usuario from "../../model/model_usuario"
 import helpers from "../../helpers/helpers"
-import domain_usuario from "../../domain/usuario"
+import domain_usuario from "../../domain/domain_usuario"
 
 const use_case_usuario_register = class use_case_usuario_register {
     private usuario: t.Entidades.Usuario.Register.Input['data']['usuario']
