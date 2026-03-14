@@ -31,7 +31,7 @@ namespace TypesLista {
     }
 
     export namespace BuscarPeloUsuarioId {
-        export const route = "/api/listas" as const;
+        export const route = "/api/lista" as const;
 
         export const InputSchema = z4.object({
             usuario_id: z4.string()

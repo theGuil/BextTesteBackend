@@ -5,15 +5,25 @@ export const registerListaRoutes = (registry: OpenAPIRegistry) => {
     registry.registerPath({
         method: "post",
         path: t.Entidades.Lista.CriarPeloUsuarioId.route,
-        summary: "Criar lista",
+        summary: "Criar lista do usuário",
         tags: ["Lista"],
         request: {
             body: {
-                content: { "application/json": { schema: t.Entidades.Lista.CriarPeloUsuarioId.InputSchema } }
+                content: {
+                    "application/json": {
+                        schema: t.Entidades.Lista.CriarPeloUsuarioId.InputSchema
+                    }
+                }
             }
         },
         responses: {
-            201: { description: "Lista criada com sucesso" },
+            201: {
+                description: "Lista criada com sucesso", content: {
+                    "application/json": {
+                        schema: t.Entidades.Lista.CriarPeloUsuarioId.InputSchema
+                    }
+                }
+            },
             400: { description: "Erro de validação" }
         }
     });
@@ -32,15 +42,14 @@ export const registerListaRoutes = (registry: OpenAPIRegistry) => {
     registry.registerPath({
         method: "patch",
         path: t.Entidades.Lista.AtualizarPeloUsuarioId.route,
-        summary: "Atualizar lista",
+        summary: "Atualizar lista do usuário",
+        description: "Atualiza a lista do usuário pelo id dele que está no token!",
         tags: ["Lista"],
         request: {
-            // Acessamos o schema dentro de 'data' para pegar o 'id'
             params: t.Entidades.Lista.AtualizarPeloUsuarioId.InputSchema.shape.data.pick({ id: true }),
             body: {
                 content: {
                     "application/json": {
-                        // Enviamos o restante do schema de data para o body
                         schema: t.Entidades.Lista.AtualizarPeloUsuarioId.InputSchema.shape.data
                     }
                 }
@@ -55,13 +64,22 @@ export const registerListaRoutes = (registry: OpenAPIRegistry) => {
     registry.registerPath({
         method: "delete",
         path: t.Entidades.Lista.DeletarPeloUsuarioId.route,
-        summary: "Deletar lista",
+        summary: "Deletar lista do usuário",
+        description: "Remove uma lista permanentemente. A lista deve estar vazia (sem tarefas) para ser deletada.",
         tags: ["Lista"],
         request: {
             params: t.Entidades.Lista.DeletarPeloUsuarioId.InputSchema.pick({ id: true })
         },
         responses: {
-            200: { description: "Lista deletada com sucesso" }
+            200: {
+                description: "Lista deletada com sucesso"
+            },
+            400: {
+                description: "Não é possível deletar uma lista que ainda contém tarefas."
+            },
+            404: {
+                description: "Lista não encontrada."
+            }
         }
     });
 };

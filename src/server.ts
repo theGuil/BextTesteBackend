@@ -45,6 +45,7 @@ helpers.db.start()
 app.listen(PORT, () => {
     console.log(`Servidor online em: http://localhost:${PORT}`);
     console.log(`Documentação API em: http://localhost:${PORT}/docs/api`);
+    console.log(`Documentação openapi.json em: http://localhost:${PORT}/docs/openapi.json`);
     console.log(`Documentação ERD em: http://localhost:${PORT}/docs/erd?showMode=ALL_FIELDS`);
 });
 

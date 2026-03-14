@@ -39,7 +39,7 @@ namespace TypesTarefa {
     }
 
     export namespace BuscarPeloUsuarioId {
-        export const route = "/api/tarefas" as const;
+        export const route = "/api/tarefa" as const;
 
         export const InputSchema = z4.object({
             usuario_id: z4.string()
