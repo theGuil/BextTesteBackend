@@ -39,7 +39,7 @@ export class Token {
             email: usuario.email,
             name: usuario.name,
             createdAt: usuario.createdAt
-        })
+        } satisfies t.Entidades.Usuario.UsuarioAuth)
             .setProtectedHeader({ alg: "HS256" })
             .setIssuedAt()
             .setExpirationTime("1h")

@@ -7,7 +7,7 @@ namespace TypesTarefa {
         titulo: z4.string().min(3),
         descricao: z4.string(),
         status: z4.enum(["pendente", "em_andamento", "concluida"]),
-        data_vencimento: z4.date(),
+        data_vencimento: z4.coerce.date(),
         lista_id: z4.string(),
         usuario_id: z4.string(),
         createdAt: z4.date(),
@@ -19,14 +19,17 @@ namespace TypesTarefa {
         export const route = "/api/tarefa" as const;
 
         export const InputSchema = z4.object({
-            usuario_id: z4.string(),
             data: z4.object({
-                titulo: z4.string().min(3),
-                descricao: z4.string(),
-                status: z4.enum(["pendente", "em_andamento", "concluida"]),
-                data_vencimento: z4.date(),
-                lista_id: z4.string()
-            })
+                tarefa: z4.object({
+                    usuario_id: z4.string(),
+                    titulo: z4.string().min(3),
+                    descricao: z4.string(),
+                    status: z4.enum(["pendente", "em_andamento", "concluida"]),
+                    data_vencimento: z4.coerce.date(),
+                    lista_id: z4.string()
+                }),
+            }),
+
         }).strict();
 
         export type Input = z4.infer<typeof InputSchema>;
@@ -42,7 +45,11 @@ namespace TypesTarefa {
         export const route = "/api/tarefa" as const;
 
         export const InputSchema = z4.object({
-            usuario_id: z4.string()
+            data: z4.object({
+                tarefa: z4.object({
+                    usuario_id: z4.string()
+                }),
+            }),
         }).strict();
 
         export type Input = z4.infer<typeof InputSchema>;
@@ -55,11 +62,14 @@ namespace TypesTarefa {
     }
 
     export namespace DeletarPeloUsuarioId {
-        export const route = "/api/tarefa" as const;
+        export const route = "/api/tarefa/:id" as const;
 
         export const InputSchema = z4.object({
-            id: z4.string(),
-            usuario_id: z4.string()
+            data: z4.object({
+                tarefa: z4.object({
+                    _id: z4.string()
+                }),
+            }),
         }).strict();
 
         export type Input = z4.infer<typeof InputSchema>;
@@ -73,15 +83,15 @@ namespace TypesTarefa {
         export const route = "/api/tarefa" as const;
 
         export const InputSchema = z4.object({
-            id: z4.string(),
-            usuario_id: z4.string(),
             data: z4.object({
                 tarefa: z4.object({
+                    _id: z4.string(),
+                    usuario_id: z4.string(),
+                    lista_id: z4.string().optional(),
                     titulo: z4.string().min(3).optional(),
                     descricao: z4.string().optional(),
                     status: z4.enum(["pendente", "em_andamento", "concluida"]).optional(),
-                    data_vencimento: z4.date().optional(),
-                    lista_id: z4.string().optional()
+                    data_vencimento: z4.coerce.date().optional(),
                 }),
             }),
         }).strict();

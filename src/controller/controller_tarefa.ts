@@ -5,13 +5,17 @@ import use_case_tarefa_atualizar_pelo_usuario_id from "../use_case/tarefa/atuali
 import use_case_tarefa_deletar_pelo_usuario_id from "../use_case/tarefa/deletar_pelo_usuario_id";
 import helpers from "../helpers/helpers";
 
-
-
 const controller_tarefa = new class controller_tarefa {
 
     public async buscar_pelo_usuario_id(req: Request, res: Response) {
         try {
-            const results = await new use_case_tarefa_buscar_pelo_usuario_id(req.body, req.usuario_auth).factory();
+            const results = await new use_case_tarefa_buscar_pelo_usuario_id({
+                data: {
+                    tarefa: {
+                        usuario_id: req.usuario_auth._id
+                    }
+                }
+            }, req.usuario_auth).factory();
 
             return helpers.set_response.res.SUCCESS({ res, message: "Tarefas encontradas com sucesso!", results });
 
@@ -44,9 +48,13 @@ const controller_tarefa = new class controller_tarefa {
 
     public async deletar_pelo_usuario_id(req: Request, res: Response) {
         try {
-            const { id } = req.params;
-
-            const results = await new use_case_tarefa_deletar_pelo_usuario_id({ id: String(id), usuario_id: "" }, req.usuario_auth).factory();
+            const results = await new use_case_tarefa_deletar_pelo_usuario_id({
+                data: {
+                    tarefa: {
+                        _id: String(req.params.id)
+                    }
+                }
+            }, req.usuario_auth).factory();
 
             return helpers.set_response.res.SUCCESS({ res, message: "Tarefa removida com sucesso!", results });
 

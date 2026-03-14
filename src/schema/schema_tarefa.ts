@@ -1,4 +1,4 @@
-import { Schema, model, InferSchemaType, Types } from 'mongoose';
+import { Schema, model, InferSchemaType } from 'mongoose';
 
 const set_schema_tarefa = new Schema({
     titulo: { type: String, required: true },
@@ -15,6 +15,24 @@ const set_schema_tarefa = new Schema({
     createdAt: { type: Date, default: Date.now }
 });
 
-export type TarefaSelect = InferSchemaType<typeof set_schema_tarefa> & { _id: Types.ObjectId };
+export type TarefaSelect = Omit<InferSchemaType<typeof set_schema_tarefa>, 'usuario_id' | 'lista_id'> & {
+    _id: string;
+    usuario_id: string;
+    lista_id: string;
+    createdAt: Date;
+};
+
+
+export type TarefaBuscarPeloUsuarioId = Pick<TarefaSelect, "usuario_id">;
+
+export type TarefaCriarPeloUsuarioId = Pick<
+    TarefaSelect,
+    "usuario_id" | "data_vencimento" | "descricao" | "lista_id" | "status" | "titulo"
+>;
+
+export type TarefaAtualizarPeloUsuarioId = Pick<TarefaSelect, '_id' | 'usuario_id'> &
+    Partial<Omit<TarefaSelect, '_id' | 'usuario_id'>> & {};
+
+export type TarefaDeletarPeloUsuarioId = Pick<TarefaSelect, "_id" | "usuario_id">;
 
 export const schema_tarefa = model<TarefaSelect>('tarefa', set_schema_tarefa);

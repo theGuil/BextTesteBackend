@@ -1,4 +1,4 @@
-import { Schema, model, InferSchemaType, Types } from 'mongoose';
+import { Schema, model, InferSchemaType } from 'mongoose';
 
 const set_schema_lista = new Schema({
     usuario_id: { type: Schema.Types.ObjectId, ref: 'usuario', required: true, index: true },
@@ -6,6 +6,19 @@ const set_schema_lista = new Schema({
     createdAt: { type: Date, default: Date.now }
 });
 
-export type ListaSelect = InferSchemaType<typeof set_schema_lista> & { _id: Types.ObjectId };
+export type ListaSelect = Omit<InferSchemaType<typeof set_schema_lista>, 'usuario_id'> & {
+    _id: string;
+    usuario_id: string;
+    createdAt: Date;
+};
+
+export type ListaBuscarPeloUsuarioId = Pick<ListaSelect, "usuario_id">;
+
+export type ListaCriarPeloUsuarioId = Pick<ListaSelect, "usuario_id" | "nome">;
+
+export type ListaAtualizarPeloUsuarioId = Pick<ListaSelect, "_id" | "usuario_id"> &
+    Partial<Pick<ListaSelect, "nome">> & {};
+
+export type ListaDeletarPeloUsuarioId = Pick<ListaSelect, "_id" | "usuario_id">;
 
 export const schema_lista = model<ListaSelect>('lista', set_schema_lista);

@@ -47,7 +47,7 @@ const set_response = new class {
                     code: "SCHEMA_VALIDATION",
                     type: "warning",
                     message: "Erro ao validar dados!",
-                    results: error,
+                    results: z4.treeifyError(error),
                 };
                 return res.status(400).json(payload);
             }

@@ -15,10 +15,12 @@ namespace TypesLista {
         export const route = "/api/lista" as const;
 
         export const InputSchema = z4.object({
-            usuario_id: z4.string(),
             data: z4.object({
-                nome: z4.string().min(3),
-            })
+                lista: z4.object({
+                    usuario_id: z4.string(),
+                    nome: z4.string().min(3),
+                }),
+            }),
         }).strict();
 
         export type Input = z4.infer<typeof InputSchema>;
@@ -34,7 +36,11 @@ namespace TypesLista {
         export const route = "/api/lista" as const;
 
         export const InputSchema = z4.object({
-            usuario_id: z4.string()
+            data: z4.object({
+                lista: z4.object({
+                    usuario_id: z4.string()
+                }),
+            }),
         }).strict();
 
         export type Input = z4.infer<typeof InputSchema>;
@@ -50,8 +56,12 @@ namespace TypesLista {
         export const route = "/api/lista/:id" as const;
 
         export const InputSchema = z4.object({
-            id: z4.string(),
-            usuario_id: z4.string()
+            data: z4.object({
+                lista: z4.object({
+                    _id: z4.string(),
+                    usuario_id: z4.string()
+                }),
+            }),
         }).strict();
 
         export type Input = z4.infer<typeof InputSchema>;
@@ -66,9 +76,11 @@ namespace TypesLista {
 
         export const InputSchema = z4.object({
             data: z4.object({
-                id: z4.string(),
-                usuario_id: z4.string(),
-                nome: z4.string().min(3),
+                lista: z4.object({
+                    _id: z4.string(),
+                    usuario_id: z4.string(),
+                    nome: z4.string().min(3).optional(),
+                }),
             }),
         }).strict();
 
