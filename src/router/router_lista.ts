@@ -4,7 +4,7 @@ import t from "../types/entidades";
 import helpers from "../helpers/helpers";
 const router_lista = Router();
 
-router_lista.post(t.Entidades.Lista.Criar.route, helpers.token.verificar_token, controller_lista.criar_lista_pelo_usuario_id);
+router_lista.post(t.Entidades.Lista.Criar.route, helpers.token.verificar_token, controller_lista.criar);
 
 router_lista.get(t.Entidades.Lista.BuscarPeloFiltro.route, helpers.token.verificar_token, controller_lista.buscar_pelo_filtro);
 

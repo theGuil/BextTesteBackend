@@ -21,7 +21,6 @@ namespace TypesTarefa {
         export const InputSchema = z4.object({
             data: z4.object({
                 tarefa: z4.object({
-                    usuario_id: z4.string(),
                     lista_id: z4.string(),
                     titulo: z4.string().min(3),
                     descricao: z4.string(),

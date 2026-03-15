@@ -26,7 +26,10 @@ export default class use_case_tarefa_criar {
 
         this.domain_lista.verificar_se_lista_pertence_ao_usuario_auth(lista)
 
-        const nova_tarefa = await model_tarefa.criar(this.tarefa);
+        const nova_tarefa = await model_tarefa.criar({
+            usuario_id: this.domain_tarefa.USUARIO_AUTH._id,
+            ...this.tarefa
+        });
 
         return {
             data: {

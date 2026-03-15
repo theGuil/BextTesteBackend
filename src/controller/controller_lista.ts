@@ -11,13 +11,13 @@ const controller_lista = new class controller_lista {
 
     public async buscar_pelo_filtro(req: Request, res: Response) {
         try {
-            const { nome, pagina } = req.query;
+            const { pagina } = req.query;
 
             const results = await new use_case_lista_buscar_pelo_filtro({
                 data: {
                     filtros: {
-                        nome: nome as string,
-                        pagina: pagina ? Number(pagina) : 1
+                        pagina: pagina ? Number(pagina) : 1,
+                        ...req.query
                     }
                 }
             }, req.usuario_auth).factory();
@@ -28,9 +28,8 @@ const controller_lista = new class controller_lista {
         }
     }
 
-    public async criar_lista_pelo_usuario_id(req: Request, res: Response) {
+    public async criar(req: Request, res: Response) {
         try {
-
 
             const results = await new use_case_lista_criar(req.body, req.usuario_auth).factory();
 
@@ -48,7 +47,7 @@ const controller_lista = new class controller_lista {
                 data: {
                     lista: {
                         _id: String(id),
-                        nome: req.body.data.lista.nome
+                        ...req.body.data.lista
                     }
                 }
             }, req.usuario_auth).factory();

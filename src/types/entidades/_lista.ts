@@ -38,8 +38,8 @@ namespace TypesLista {
             data: z4.object({
                 filtros: z4.object({
                     pagina: z4.number().min(0).max(10),
-                    nome: z4.string()
-                }),
+                    nome: z4.string().optional()
+                }).strict(),
             }),
         }).strict();
 
