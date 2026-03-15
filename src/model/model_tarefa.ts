@@ -1,20 +1,39 @@
 import {
     schema_tarefa,
     TarefaSelect,
-    TarefaBuscarPeloFiltro,
     TarefaCriar,
     TarefaAtualizarPeloId,
     TarefaDeletarPeloId
 } from "../schema/schema_tarefa";
 import helpers from "../helpers/helpers";
 
+import t from "../types/entidades";
+
 export default class model_tarefa {
 
-    static async buscar_pelo_filtro(props: TarefaBuscarPeloFiltro): Promise<TarefaSelect[]> {
+    static async buscar_pelo_filtro(props: t.Entidades.Tarefa.BuscarPeloFiltro.Input['data']['filtro'] & { usuario_id: string }): Promise<TarefaSelect[]> {
         try {
-            return await schema_tarefa.find({ usuario_id: props.usuario_id }).lean<TarefaSelect[]>();
+            const query: any = { usuario_id: props.usuario_id };
+
+            if (props._id) query._id = props._id;
+            if (props.titulo) query.titulo = { $regex: props.titulo, $options: 'i' };
+            if (props.descricao) query.descricao = { $regex: props.descricao, $options: 'i' };
+            if (props.status) query.status = props.status;
+            if (props.data_vencimento) query.data_vencimento = props.data_vencimento;
+            if (props.lista_id) query.lista_id = props.lista_id;
+
+            const limite = 30;
+            const p = props.pagina || 1;
+            const pular = (p - 1) * limite;
+
+            return await schema_tarefa
+                .find(query)
+                .skip(pular)
+                .limit(limite)
+                .lean<TarefaSelect[]>();
+
         } catch (error) {
-            helpers.set_response.err.DB_ERROR({ message: "Erro ao buscar tarefas pelo ID do usuário!" });
+            helpers.set_response.err.DB_ERROR({ message: "Erro ao buscar tarefas pelo filtro!" });
         }
     }
 

@@ -42,8 +42,14 @@ namespace TypesTarefa {
             data: z4.object({
                 filtro: z4.object({
                     pagina: z4.number().min(1).max(30),
-                }),
-            }),
+                    _id: z4.string().optional(),
+                    titulo: z4.string().optional(),
+                    descricao: z4.string().optional(),
+                    status: z4.enum(["pendente", "em_andamento", "concluida"]).optional(),
+                    data_vencimento: z4.coerce.date().optional(),
+                    lista_id: z4.string().optional(),
+                }).strict(),
+            }).strict(),
         }).strict();
 
         export type Input = z4.infer<typeof InputSchema>;

@@ -15,7 +15,8 @@ const controller_tarefa = new class controller_tarefa {
             const results = await new use_case_tarefa_buscar_pelo_filtro({
                 data: {
                     filtro: {
-                        pagina: pagina ? Number(pagina) : 1
+                        pagina: pagina ? Number(pagina) : 1,
+                        ...req.query
                     }
                 }
             }, req.usuario_auth).factory();
@@ -28,10 +29,6 @@ const controller_tarefa = new class controller_tarefa {
 
     public async criar(req: Request, res: Response) {
         try {
-            const { usuario_id, lista_id } = req.params;
-
-            req.body.data.tarefa.usuario_id = String(usuario_id);
-            req.body.data.tarefa.lista_id = String(lista_id);
 
             const results = await new use_case_tarefa_criar(req.body, req.usuario_auth).factory();
 
@@ -62,14 +59,12 @@ const controller_tarefa = new class controller_tarefa {
 
     public async deletar_pelo_id(req: Request, res: Response) {
         try {
-            const { usuario_id, lista_id, tarefa_id } = req.params;
+            const { id } = req.params;
 
             const results = await new use_case_tarefa_deletar_pelo_id({
                 data: {
                     tarefa: {
-                        _id: String(tarefa_id),
-                        usuario_id: String(usuario_id),
-                        lista_id: String(lista_id)
+                        _id: String(id),
                     }
                 }
             }, req.usuario_auth).factory();

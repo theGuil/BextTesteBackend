@@ -23,7 +23,6 @@ export type TarefaSelect = Omit<InferSchemaType<typeof set_schema_tarefa>, 'usua
 };
 
 
-export type TarefaBuscarPeloFiltro = Pick<TarefaSelect, "usuario_id">;
 
 export type TarefaCriar = Pick<
     TarefaSelect,
