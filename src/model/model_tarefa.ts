@@ -39,10 +39,10 @@ export default class model_tarefa {
 
     static async atualizar_pelo_id(props: TarefaAtualizarPeloId): Promise<TarefaSelect> {
         try {
-            const { _id, usuario_id, ...campos } = props;
+            const { _id, ...campos } = props;
 
             return await schema_tarefa.findOneAndUpdate(
-                { _id, usuario_id },
+                { _id },
                 { $set: campos },
                 { new: true }
             ).lean<TarefaSelect>();

@@ -30,7 +30,7 @@ export type TarefaCriar = Pick<
     "usuario_id" | "data_vencimento" | "descricao" | "lista_id" | "status" | "titulo"
 >;
 
-export type TarefaAtualizarPeloId = Pick<TarefaSelect, '_id' | 'usuario_id'> &
+export type TarefaAtualizarPeloId = Pick<TarefaSelect, '_id'> &
     Partial<Omit<TarefaSelect, '_id' | 'usuario_id'>> & {};
 
 export type TarefaDeletarPeloId = Pick<TarefaSelect, "_id">;
