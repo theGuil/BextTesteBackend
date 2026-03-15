@@ -56,7 +56,7 @@ export class Token {
         const token = await new jose.SignJWT({ usuario_id })
             .setProtectedHeader({ alg: "HS256" })
             .setIssuedAt()
-            .setExpirationTime("7d")
+            .setExpirationTime("2h")
             .sign(new TextEncoder().encode(refresh_secret));
 
         return token;
