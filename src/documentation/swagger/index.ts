@@ -32,7 +32,7 @@ const getDefinition = () => {
         servers: [
             { url: "http://localhost:3000", description: "LOCALHOST" },
         ],
-        security: [{ BearerAuth: [] }]
+
     });
 };
 

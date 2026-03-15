@@ -1,5 +1,6 @@
 import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
 import t from "../../types/entidades";
+import z4 from "zod/v4";
 
 export const registerListaRoutes = (registry: OpenAPIRegistry) => {
     registry.registerPath({
@@ -7,7 +8,9 @@ export const registerListaRoutes = (registry: OpenAPIRegistry) => {
         path: t.Entidades.Lista.CriarPeloUsuarioId.route,
         summary: "Criar lista do usuário",
         tags: ["Lista"],
+        security: [{ BearerAuth: [] }],
         request: {
+            params: z4.object({ usuario_id: z4.string() }),
             body: {
                 content: {
                     "application/json": {
@@ -17,13 +20,8 @@ export const registerListaRoutes = (registry: OpenAPIRegistry) => {
             }
         },
         responses: {
-            201: {
-                description: "Lista criada com sucesso", content: {
-                    "application/json": {
-                        schema: t.Entidades.Lista.CriarPeloUsuarioId.InputSchema
-                    }
-                }
-            },
+            201: { description: "Lista criada com sucesso" },
+            401: { description: "Token não fornecido ou inválido" },
             400: { description: "Erro de validação" }
         }
     });
@@ -33,8 +31,13 @@ export const registerListaRoutes = (registry: OpenAPIRegistry) => {
         path: t.Entidades.Lista.BuscarPeloUsuarioId.route,
         summary: "Buscar listas do usuário",
         tags: ["Lista"],
+        security: [{ BearerAuth: [] }],
+        request: {
+            params: z4.object({ usuario_id: z4.string() }),
+        },
         responses: {
             200: { description: "Listas encontradas com sucesso" },
+            401: { description: "Token não fornecido ou inválido" },
             404: { description: "Nenhuma lista encontrada" }
         }
     });
@@ -45,18 +48,23 @@ export const registerListaRoutes = (registry: OpenAPIRegistry) => {
         summary: "Atualizar lista do usuário",
         description: "Atualiza a lista do usuário pelo id dele que está no token!",
         tags: ["Lista"],
+        security: [{ BearerAuth: [] }],
         request: {
-            params: t.Entidades.Lista.AtualizarPeloUsuarioId.InputSchema.shape.data.pick({ id: true }),
+            params: z4.object({
+                usuario_id: z4.string(),
+                lista_id: z4.string()
+            }),
             body: {
                 content: {
                     "application/json": {
-                        schema: t.Entidades.Lista.AtualizarPeloUsuarioId.InputSchema.shape.data
+                        schema: t.Entidades.Lista.AtualizarPeloUsuarioId.InputSchema
                     }
                 }
             }
         },
         responses: {
             200: { description: "Lista atualizada com sucesso" },
+            401: { description: "Token não fornecido ou inválido" },
             400: { description: "Erro de validação" }
         }
     });
@@ -67,19 +75,18 @@ export const registerListaRoutes = (registry: OpenAPIRegistry) => {
         summary: "Deletar lista do usuário",
         description: "Remove uma lista permanentemente. A lista deve estar vazia (sem tarefas) para ser deletada.",
         tags: ["Lista"],
+        security: [{ BearerAuth: [] }],
         request: {
-            params: t.Entidades.Lista.DeletarPeloUsuarioId.InputSchema.pick({ id: true })
+            params: z4.object({
+                usuario_id: z4.string(),
+                lista_id: z4.string()
+            })
         },
         responses: {
-            200: {
-                description: "Lista deletada com sucesso"
-            },
-            400: {
-                description: "Não é possível deletar uma lista que ainda contém tarefas."
-            },
-            404: {
-                description: "Lista não encontrada."
-            }
+            200: { description: "Lista deletada com sucesso" },
+            401: { description: "Token não fornecido ou inválido" },
+            400: { description: "Não é possível deletar uma lista que ainda contém tarefas." },
+            404: { description: "Lista não encontrada." }
         }
     });
 };

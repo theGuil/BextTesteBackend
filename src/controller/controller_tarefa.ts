@@ -7,7 +7,7 @@ import helpers from "../helpers/helpers";
 
 const controller_tarefa = new class controller_tarefa {
 
-    public async buscar_pela_lista_id(req: Request, res: Response) {
+    public async buscar_pelo_usuario_id(req: Request, res: Response) {
         try {
             const { usuario_id, lista_id } = req.params;
 
