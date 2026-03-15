@@ -9,10 +9,12 @@ const controller_lista = new class controller_lista {
 
     public async buscar_pelo_usuario_id(req: Request, res: Response) {
         try {
+            const { usuario_id } = req.params;
+
             const results = await new use_case_lista_buscar_pelo_usuario_id({
                 data: {
                     lista: {
-                        usuario_id: req.usuario_auth._id
+                        usuario_id: String(usuario_id)
                     }
                 }
             }, req.usuario_auth).factory();
@@ -25,6 +27,10 @@ const controller_lista = new class controller_lista {
 
     public async criar_lista_pelo_usuario_id(req: Request, res: Response) {
         try {
+            const { usuario_id } = req.params;
+
+            req.body.data.lista.usuario_id = String(usuario_id);
+
             const results = await new use_case_lista_criar_pelo_usuario_id(req.body, req.usuario_auth).factory();
 
             return helpers.set_response.res.CREATED({ res, message: "Lista criada com sucesso!", results });
@@ -35,11 +41,13 @@ const controller_lista = new class controller_lista {
 
     public async atualizar_pelo_usuario_id(req: Request, res: Response) {
         try {
+            const { usuario_id, lista_id } = req.params;
+
             const results = await new use_case_lista_atualizar_pelo_usuario_id({
                 data: {
                     lista: {
-                        _id: String(req.params.id),
-                        usuario_id: req.usuario_auth._id,
+                        _id: String(lista_id),
+                        usuario_id: String(usuario_id),
                         nome: req.body.data.lista.nome
                     }
                 }
@@ -53,11 +61,13 @@ const controller_lista = new class controller_lista {
 
     public async deletar_pelo_usuario_id(req: Request, res: Response) {
         try {
+            const { usuario_id, lista_id } = req.params;
+
             const results = await new use_case_lista_deletar_pelo_usuario_id({
                 data: {
                     lista: {
-                        _id: String(req.params.id),
-                        usuario_id: req.usuario_auth._id
+                        _id: String(lista_id),
+                        usuario_id: String(usuario_id)
                     }
                 }
             }, req.usuario_auth).factory();

@@ -7,18 +7,20 @@ import helpers from "../helpers/helpers";
 
 const controller_tarefa = new class controller_tarefa {
 
-    public async buscar_pelo_usuario_id(req: Request, res: Response) {
+    public async buscar_pela_lista_id(req: Request, res: Response) {
         try {
+            const { usuario_id, lista_id } = req.params;
+
             const results = await new use_case_tarefa_buscar_pelo_usuario_id({
                 data: {
                     tarefa: {
-                        usuario_id: req.usuario_auth._id
+                        usuario_id: String(usuario_id),
+                        lista_id: String(lista_id)
                     }
                 }
             }, req.usuario_auth).factory();
 
             return helpers.set_response.res.SUCCESS({ res, message: "Tarefas encontradas com sucesso!", results });
-
         } catch (error) {
             return helpers.set_response.res.SERVER_ERROR({ error, res });
         }
@@ -26,10 +28,14 @@ const controller_tarefa = new class controller_tarefa {
 
     public async criar_pelo_usuario_id(req: Request, res: Response) {
         try {
+            const { usuario_id, lista_id } = req.params;
+
+            req.body.data.tarefa.usuario_id = String(usuario_id);
+            req.body.data.tarefa.lista_id = String(lista_id);
+
             const results = await new use_case_tarefa_criar_pelo_usuario_id(req.body, req.usuario_auth).factory();
 
             return helpers.set_response.res.CREATED({ res, message: "Tarefa criada com sucesso!", results });
-
         } catch (error) {
             return helpers.set_response.res.SERVER_ERROR({ error, res });
         }
@@ -37,10 +43,20 @@ const controller_tarefa = new class controller_tarefa {
 
     public async atualizar_pelo_usuario_id(req: Request, res: Response) {
         try {
-            const results = await new use_case_tarefa_atualizar_pelo_usuario_id(req.body, req.usuario_auth).factory();
+            const { usuario_id, lista_id, tarefa_id } = req.params;
+
+            const results = await new use_case_tarefa_atualizar_pelo_usuario_id({
+                data: {
+                    tarefa: {
+                        ...req.body.data?.tarefa,
+                        _id: String(tarefa_id),
+                        usuario_id: String(usuario_id),
+                        lista_id: String(lista_id)
+                    }
+                }
+            }, req.usuario_auth).factory();
 
             return helpers.set_response.res.SUCCESS({ res, message: "Tarefa atualizada com sucesso!", results });
-
         } catch (error) {
             return helpers.set_response.res.SERVER_ERROR({ error, res });
         }
@@ -48,16 +64,19 @@ const controller_tarefa = new class controller_tarefa {
 
     public async deletar_pelo_usuario_id(req: Request, res: Response) {
         try {
+            const { usuario_id, lista_id, tarefa_id } = req.params;
+
             const results = await new use_case_tarefa_deletar_pelo_usuario_id({
                 data: {
                     tarefa: {
-                        _id: String(req.params.id)
+                        _id: String(tarefa_id),
+                        usuario_id: String(usuario_id),
+                        lista_id: String(lista_id)
                     }
                 }
             }, req.usuario_auth).factory();
 
             return helpers.set_response.res.SUCCESS({ res, message: "Tarefa removida com sucesso!", results });
-
         } catch (error) {
             return helpers.set_response.res.SERVER_ERROR({ error, res });
         }

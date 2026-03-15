@@ -12,7 +12,7 @@ namespace TypesLista {
     export type Base = z4.infer<typeof schemaBase>;
 
     export namespace CriarPeloUsuarioId {
-        export const route = "/api/lista" as const;
+        export const route = "/api/usuario/:usuario_id/lista" as const;
 
         export const InputSchema = z4.object({
             data: z4.object({
@@ -33,7 +33,7 @@ namespace TypesLista {
     }
 
     export namespace BuscarPeloUsuarioId {
-        export const route = "/api/lista" as const;
+        export const route = "/api/usuario/:usuario_id/listas" as const;
 
         export const InputSchema = z4.object({
             data: z4.object({
@@ -53,7 +53,7 @@ namespace TypesLista {
     }
 
     export namespace DeletarPeloUsuarioId {
-        export const route = "/api/lista/:id" as const;
+        export const route = "/api/usuario/:usuario_id/lista/:lista_id" as const;
 
         export const InputSchema = z4.object({
             data: z4.object({
@@ -72,7 +72,7 @@ namespace TypesLista {
     }
 
     export namespace AtualizarPeloUsuarioId {
-        export const route = "/api/lista/:id" as const;
+        export const route = "/api/usuario/:usuario_id/lista/:lista_id" as const;
 
         export const InputSchema = z4.object({
             data: z4.object({
