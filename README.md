@@ -1,38 +1,112 @@
 # BextTesteBackend
 
-## 1. Visão Geral do Sistema
+## 1. Comandos Obrigatórios (Setup)
+
+Antes de iniciar o projeto, é obrigatório rodar os comandos abaixo para preparar o ambiente:
+
+**1. Instalar as dependências:**
+
+```bash
+npm install
+```
+
+**2. Gerar o diagrama ERD:**
+
+Utilizo o **LIAM ERD** para mapear as collections. Rode o comando abaixo para gerar o diagrama das entidades:
+
+```bash
+npm run dbml
+```
+
+---
+
+## 2. Variáveis de Ambiente (`.env`)
+
+É obrigatório criar um arquivo chamado `.env` na raiz do projeto contendo as seguintes variáveis:
+
+```env
+JSON_WEB_TOKEN_AUTH_USER="5as9das655as8w"
+JSON_WEB_REFRESH_TOKEN_AUTH_USER="5as9d9as6a2as5d98"
+MONGODB_URI='mongodb://localhost:27017/BextTesteGuilherme'
+```
+
+---
+
+## 3. Rodando o Projeto
+
+Com tudo configurado, você pode utilizar os comandos abaixo:
+
+**Iniciar o ambiente de desenvolvimento:**
+
+```bash
+npm run dev
+```
+
+**Rodar os testes:**
+
+```bash
+npm run test
+```
+
+---
+
+## 4. Documentação da API
+
+Quando o projeto estiver rodando localmente, você pode acessar a documentação nestes links:
+
+| Recurso               | URL                                                |
+| --------------------- | -------------------------------------------------- |
+| Documentação API      | http://localhost:3000/docs/api                     |
+| Especificação OpenAPI | http://localhost:3000/docs/openapi.json            |
+| Diagrama ERD          | http://localhost:3000/docs/erd?showMode=ALL_FIELDS |
+
+---
+
+## 5. Visão Geral do Sistema
+
+Desenvolvi o backend seguindo os princípios de **Clean Architecture** e partes do **DDD** .
 
 ### Fluxo Padrão da Arquitetura Backend
 
-Neste diagrama, detalhamos como as requisições transitam entre as camadas da API, desde a entrada no servidor até a resposta final, seguindo princípios de Clean Architecture.
+Requisições transitam entre as camadas da API, desde a entrada no servidor até a resposta final.
 
-![Diagrama mostrando o fluxo de uma requisição pelas camadas do backend (Rotas, Controllers, Use Cases, Repositories)](./public/fluxo-padrao-backend.png)
+![1](./public/fluxo-padrao-backend.png)
 
-## 2. Organização do Projeto
+---
+
+## 6. Organização do Projeto
 
 ### Estrutura de Pastas e Arquivos
 
-Esta imagem ilustra a organização modular do código-fonte dentro do diretório `src/`, destacando a separação de responsabilidades.
+Organização modular do código-fonte dentro do diretório `src/`, destacando a separação de responsabilidades.
 
-![Visão hierárquica das pastas do projeto: server.ts, router, controller, use_case, domain (model, schema), types e documentation](./public/estrutura-de-pastas.png)
+![2](./public/estrutura-de-pastas.png)
 
-## 3. Fluxos de Negócio e Casos de Uso
+---
+
+## 7. Fluxos de Negócio e Casos de Uso
 
 ### Fluxo de Autenticação do Usuário
 
-Diagrama detalhado do processo de login e registro, incluindo a geração de tokens e validações de segurança.
+Diagrama detalhado do processo de login e registro, incluindo a geração de tokens e as validações de segurança.
 
-![Fluxograma mostrando o passo a passo da autenticação de um usuário no sistema](./public/fluxo-usuario.png)
+![3](./public/fluxo-usuario.png)
 
 ### Fluxo de Domínio: Gestão de Tarefas
 
 Este diagrama representa a lógica de negócio principal para a criação, atualização e listagem de tarefas dentro do domínio da aplicação.
 
-![Representação visual das regras de negócio aplicadas ao domínio de tarefas, mostrando a interação entre modelos, schemas e use cases](./public/fluxo-tarefa-domain.png)
+![4](./public/fluxo-tarefa-domain.png)
 
-### Fluxo de Commit
+---
 
+## 8. Meu Fluxo de Commit
+
+Para manter o repositório organizado, sigo este fluxo de comandos na hora de enviar o código para produção:
+
+```bash
 git init
 git add .
-git commit -m "✨ feat:"
+git commit -m "✨ feat: "
 git push -u origin producao
+```
