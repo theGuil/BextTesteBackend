@@ -18,6 +18,16 @@ export default class model_tarefa {
         }
     }
 
+    static async buscar_pelo_id(props: { _id: string }): Promise<TarefaSelect> {
+        try {
+            const [results] = await schema_tarefa.find({ _id: props._id }).lean();
+
+            return results
+        } catch (error) {
+            helpers.set_response.err.DB_ERROR({ message: "Erro ao buscar tarefas pelo ID do usuário!" });
+        }
+    }
+
     static async criar(props: TarefaCriar): Promise<TarefaSelect> {
         try {
             const set_nova_tarefa = new schema_tarefa(props);
@@ -43,7 +53,7 @@ export default class model_tarefa {
 
     static async deletar_pelo_id(props: TarefaDeletarPeloId): Promise<void> {
         try {
-            await schema_tarefa.findOneAndDelete({ _id: props._id, usuario_id: props.usuario_id });
+            await schema_tarefa.findOneAndDelete({ _id: props._id });
         } catch (error) {
             helpers.set_response.err.DB_ERROR({ message: "Erro ao deletar tarefa!" });
         }

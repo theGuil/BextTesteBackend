@@ -33,6 +33,6 @@ export type TarefaCriar = Pick<
 export type TarefaAtualizarPeloId = Pick<TarefaSelect, '_id' | 'usuario_id'> &
     Partial<Omit<TarefaSelect, '_id' | 'usuario_id'>> & {};
 
-export type TarefaDeletarPeloId = Pick<TarefaSelect, "_id" | "usuario_id">;
+export type TarefaDeletarPeloId = Pick<TarefaSelect, "_id">;
 
 export const schema_tarefa = model<TarefaSelect>('tarefa', set_schema_tarefa);

@@ -52,7 +52,9 @@ export default class model_lista {
 
     static async buscar_pelo_id(props: { _id: string }): Promise<ListaSelect> {
         try {
-            return await schema_lista.find({ _id: props._id }).lean<ListaSelect>();
+            const [results] = await schema_lista.find({ _id: props._id }).lean();
+
+            return results
         } catch (error) {
             helpers.set_response.err.DB_ERROR({ message: "Erro ao buscar listas pelo ID do usuário!" });
         }
