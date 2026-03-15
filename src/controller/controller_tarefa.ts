@@ -43,15 +43,13 @@ const controller_tarefa = new class controller_tarefa {
 
     public async atualizar_pelo_id(req: Request, res: Response) {
         try {
-            const { usuario_id, lista_id, tarefa_id } = req.params;
+            const { id } = req.params;
 
             const results = await new use_case_tarefa_atualizar_pelo_id({
                 data: {
                     tarefa: {
-                        ...req.body.data?.tarefa,
-                        _id: String(tarefa_id),
-                        usuario_id: String(usuario_id),
-                        lista_id: String(lista_id)
+                        _id: String(id),
+                        ...req.body?.data?.tarefa,
                     }
                 }
             }, req.usuario_auth).factory();

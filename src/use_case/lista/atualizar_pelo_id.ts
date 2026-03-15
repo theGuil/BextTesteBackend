@@ -12,12 +12,16 @@ export default class use_case_lista_atualizar_pelo_id extends domain_lista {
 
     async factory(): Promise<t.Entidades.Lista.AtualizarPeloId.Output> {
 
+        /* Não precisa de regra de negócio pois como é uma aplicação simples e todas as chamadas no banco já é enviado o 
+            usuario id e id da lista é impossivel um usuário atualizar a lista de outro
+            os campos usuario_id e id vão no where do metodo  atualizar_pelo_id
+          */
+
         const lista_atualizada = await model_lista.atualizar_pelo_id({
             usuario_id: this.USUARIO_AUTH._id,
             ...this.lista,
         });
 
-        this.verificar_se_usuario_id_body_e_igual_usuario_auth_id({ usuario_id_body: this.USUARIO_AUTH._id })
 
         return {
             data: {

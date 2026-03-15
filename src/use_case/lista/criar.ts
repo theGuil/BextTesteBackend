@@ -12,6 +12,7 @@ export default class use_case_lista_criar extends domain_lista {
 
     async factory(): Promise<t.Entidades.Lista.Criar.Output> {
 
+
         const nova_lista = await model_lista.criar({
             usuario_id: this.USUARIO_AUTH._id,
             ...this.lista,

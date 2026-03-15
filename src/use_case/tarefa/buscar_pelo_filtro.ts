@@ -14,7 +14,8 @@ export default class use_case_tarefa_buscar_pelo_filtro extends domain_tarefa {
 
 
         const tarefas = await model_tarefa.buscar_pelo_filtro({
-            usuario_id: this.USUARIO_AUTH._id
+            usuario_id: this.USUARIO_AUTH._id,
+            ...this.filtro
         });
 
         return {

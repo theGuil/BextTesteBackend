@@ -7,17 +7,7 @@ const domain_tarefa = class domain_tarefa {
     constructor(usuario_auth: t.Entidades.Usuario.UsuarioAuth) {
         this.USUARIO_AUTH = usuario_auth;
     }
-    /* 
-        É importante usar essa regra antes de ir ao banco de dados verificando o token e o id enviado,
-        pois dessa forma é economisado uma requisição ao banco de dados.
-    */
-    public async verificar_se_usuario_id_body_e_igual_usuario_auth_id(props: { usuario_id_body: string }) {
 
-        if (props?.usuario_id_body !== this.USUARIO_AUTH._id) {
-            helpers.set_response.err.DOMAIN_ERROR({ message: "Acesso negado, tarefa não disponível para este usuário!" });
-        }
-
-    }
 
 }
 

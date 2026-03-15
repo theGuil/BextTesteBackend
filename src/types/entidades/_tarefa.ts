@@ -57,8 +57,6 @@ namespace TypesTarefa {
             data: z4.object({
                 tarefa: z4.object({
                     _id: z4.string(),
-                    usuario_id: z4.string(),
-                    lista_id: z4.string()
                 }),
             }),
         }).strict();
@@ -74,8 +72,6 @@ namespace TypesTarefa {
             data: z4.object({
                 tarefa: z4.object({
                     _id: z4.string(),
-                    usuario_id: z4.string(),
-                    lista_id: z4.string(),
                     titulo: z4.string().min(3).optional(),
                     descricao: z4.string().optional(),
                     status: z4.enum(["pendente", "em_andamento", "concluida"]).optional(),

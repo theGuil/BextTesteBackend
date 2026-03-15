@@ -12,9 +12,17 @@ export default class use_case_tarefa_atualizar_pelo_id extends domain_tarefa {
 
     async factory(): Promise<t.Entidades.Tarefa.AtualizarPeloId.Output> {
 
-        await this.verificar_se_usuario_id_body_e_igual_usuario_auth_id({ usuario_id_body: this.tarefa.usuario_id });
 
-        const tarefa_atualizada = await model_tarefa.atualizar_pelo_id(this.tarefa);
+        /* Não precisa de regra de negócio pois como é uma aplicação simples e todas as chamadas no banco já é enviado o 
+            usuario id e id da lista é impossivel um usuário atualizar a lista de outro
+            os campos usuario_id e id vão no where do metodo  atualizar_pelo_id
+          */
+
+        const tarefa_atualizada = await model_tarefa.atualizar_pelo_id({
+            usuario_id: this.USUARIO_AUTH._id,
+            _id: this.tarefa._id,
+            ...this.tarefa
+        });
 
         return {
             data: {

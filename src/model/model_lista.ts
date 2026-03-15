@@ -49,4 +49,12 @@ export default class model_lista {
             helpers.set_response.err.DB_ERROR({ message: "Erro ao deletar lista!" });
         }
     }
+
+    static async buscar_pelo_id(props: { _id: string }): Promise<ListaSelect> {
+        try {
+            return await schema_lista.find({ _id: props._id }).lean<ListaSelect>();
+        } catch (error) {
+            helpers.set_response.err.DB_ERROR({ message: "Erro ao buscar listas pelo ID do usuário!" });
+        }
+    }
 }

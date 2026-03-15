@@ -90,6 +90,27 @@ namespace TypesLista {
             };
         };
     }
+
+    export namespace BuscarPeloId {
+        export const route = "/api/lista/:id" as const;
+
+        export const InputSchema = z4.object({
+            data: z4.object({
+                lista: z4.object({
+                    _id: z4.string(),
+
+                }),
+            }),
+        }).strict();
+
+        export type Input = z4.infer<typeof InputSchema>;
+
+        export type Output = {
+            data: {
+                lista: Base;
+            };
+        };
+    }
 }
 
 export default TypesLista;
