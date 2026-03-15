@@ -1,16 +1,16 @@
 import {
     schema_tarefa,
     TarefaSelect,
-    TarefaBuscarPeloUsuarioId,
-    TarefaCriarPeloUsuarioId,
-    TarefaAtualizarPeloUsuarioId,
-    TarefaDeletarPeloUsuarioId
+    TarefaBuscarPeloFiltro,
+    TarefaCriar,
+    TarefaAtualizarPeloId,
+    TarefaDeletarPeloId
 } from "../schema/schema_tarefa";
 import helpers from "../helpers/helpers";
 
 export default class model_tarefa {
 
-    static async buscar_pelo_usuario_id(props: TarefaBuscarPeloUsuarioId): Promise<TarefaSelect[]> {
+    static async buscar_pelo_filtro(props: TarefaBuscarPeloFiltro): Promise<TarefaSelect[]> {
         try {
             return await schema_tarefa.find({ usuario_id: props.usuario_id }).lean<TarefaSelect[]>();
         } catch (error) {
@@ -18,7 +18,7 @@ export default class model_tarefa {
         }
     }
 
-    static async criar_pelo_usuario_id(props: TarefaCriarPeloUsuarioId): Promise<TarefaSelect> {
+    static async criar(props: TarefaCriar): Promise<TarefaSelect> {
         try {
             const set_nova_tarefa = new schema_tarefa(props);
             return await set_nova_tarefa.save();
@@ -27,7 +27,7 @@ export default class model_tarefa {
         }
     }
 
-    static async atualizar_pelo_usuario_id(props: TarefaAtualizarPeloUsuarioId): Promise<TarefaSelect> {
+    static async atualizar_pelo_id(props: TarefaAtualizarPeloId): Promise<TarefaSelect> {
         try {
             const { _id, usuario_id, ...campos } = props;
 
@@ -41,7 +41,7 @@ export default class model_tarefa {
         }
     }
 
-    static async deletar_pelo_usuario_id(props: TarefaDeletarPeloUsuarioId): Promise<void> {
+    static async deletar_pelo_id(props: TarefaDeletarPeloId): Promise<void> {
         try {
             await schema_tarefa.findOneAndDelete({ _id: props._id, usuario_id: props.usuario_id });
         } catch (error) {

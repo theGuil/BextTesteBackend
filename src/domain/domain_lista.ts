@@ -3,10 +3,10 @@ import t from "../types/entidades"
 import helpers from "../helpers/helpers"
 
 const domain_lista = class domain_lista {
-    private usuario_auth: t.Entidades.Usuario.UsuarioAuth;
+    public USUARIO_AUTH: t.Entidades.Usuario.UsuarioAuth;
 
     constructor(usuario_auth: t.Entidades.Usuario.UsuarioAuth) {
-        this.usuario_auth = usuario_auth;
+        this.USUARIO_AUTH = usuario_auth;
     }
 
     /* 
@@ -15,7 +15,7 @@ const domain_lista = class domain_lista {
     */
     public async verificar_se_usuario_id_body_e_igual_usuario_auth_id(props: { usuario_id_body: string }) {
 
-        if (props?.usuario_id_body !== this.usuario_auth._id) {
+        if (props?.usuario_id_body !== this.USUARIO_AUTH._id) {
             helpers.set_response.err.DOMAIN_ERROR({ message: "Acesso negado, lista não disponivel para este usuário!" })
         }
 

@@ -5,7 +5,7 @@ import z4 from "zod/v4";
 export const registerListaRoutes = (registry: OpenAPIRegistry) => {
     registry.registerPath({
         method: "post",
-        path: t.Entidades.Lista.CriarPeloUsuarioId.route,
+        path: t.Entidades.Lista.Criar.route,
         summary: "Criar lista do usuário",
         tags: ["Lista"],
         security: [{ BearerAuth: [] }],
@@ -14,7 +14,7 @@ export const registerListaRoutes = (registry: OpenAPIRegistry) => {
             body: {
                 content: {
                     "application/json": {
-                        schema: t.Entidades.Lista.CriarPeloUsuarioId.InputSchema
+                        schema: t.Entidades.Lista.Criar.InputSchema
                     }
                 }
             }
@@ -28,7 +28,7 @@ export const registerListaRoutes = (registry: OpenAPIRegistry) => {
 
     registry.registerPath({
         method: "get",
-        path: t.Entidades.Lista.BuscarPeloUsuarioId.route,
+        path: t.Entidades.Lista.BuscarPeloFiltro.route,
         summary: "Buscar listas do usuário",
         tags: ["Lista"],
         security: [{ BearerAuth: [] }],
@@ -44,7 +44,7 @@ export const registerListaRoutes = (registry: OpenAPIRegistry) => {
 
     registry.registerPath({
         method: "patch",
-        path: t.Entidades.Lista.AtualizarPeloUsuarioId.route,
+        path: t.Entidades.Lista.AtualizarPeloId.route,
         summary: "Atualizar lista do usuário",
         description: "Atualiza a lista do usuário pelo id dele que está no token!",
         tags: ["Lista"],
@@ -57,7 +57,7 @@ export const registerListaRoutes = (registry: OpenAPIRegistry) => {
             body: {
                 content: {
                     "application/json": {
-                        schema: t.Entidades.Lista.AtualizarPeloUsuarioId.InputSchema
+                        schema: t.Entidades.Lista.AtualizarPeloId.InputSchema
                     }
                 }
             }
@@ -71,7 +71,7 @@ export const registerListaRoutes = (registry: OpenAPIRegistry) => {
 
     registry.registerPath({
         method: "delete",
-        path: t.Entidades.Lista.DeletarPeloUsuarioId.route,
+        path: t.Entidades.Lista.DeletarPeloId.route,
         summary: "Deletar lista do usuário",
         description: "Remove uma lista permanentemente. A lista deve estar vazia (sem tarefas) para ser deletada.",
         tags: ["Lista"],

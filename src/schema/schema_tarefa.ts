@@ -23,16 +23,16 @@ export type TarefaSelect = Omit<InferSchemaType<typeof set_schema_tarefa>, 'usua
 };
 
 
-export type TarefaBuscarPeloUsuarioId = Pick<TarefaSelect, "usuario_id">;
+export type TarefaBuscarPeloFiltro = Pick<TarefaSelect, "usuario_id">;
 
-export type TarefaCriarPeloUsuarioId = Pick<
+export type TarefaCriar = Pick<
     TarefaSelect,
     "usuario_id" | "data_vencimento" | "descricao" | "lista_id" | "status" | "titulo"
 >;
 
-export type TarefaAtualizarPeloUsuarioId = Pick<TarefaSelect, '_id' | 'usuario_id'> &
+export type TarefaAtualizarPeloId = Pick<TarefaSelect, '_id' | 'usuario_id'> &
     Partial<Omit<TarefaSelect, '_id' | 'usuario_id'>> & {};
 
-export type TarefaDeletarPeloUsuarioId = Pick<TarefaSelect, "_id" | "usuario_id">;
+export type TarefaDeletarPeloId = Pick<TarefaSelect, "_id" | "usuario_id">;
 
 export const schema_tarefa = model<TarefaSelect>('tarefa', set_schema_tarefa);

@@ -15,8 +15,8 @@ namespace TypesTarefa {
 
     export type Base = z4.infer<typeof schemaBase>;
 
-    export namespace CriarPeloUsuarioId {
-        export const route = "/api/usuario/:usuario_id/lista/:lista_id/tarefa" as const;
+    export namespace Criar {
+        export const route = "/api/tarefa" as const;
 
         export const InputSchema = z4.object({
             data: z4.object({
@@ -35,14 +35,13 @@ namespace TypesTarefa {
         export type Output = { data: { tarefa: Base } };
     }
 
-    export namespace BuscarPeloUsuarioId {
-        export const route = "/api/usuario/:usuario_id/lista/:lista_id/tarefas" as const;
+    export namespace BuscarPeloFiltro {
+        export const route = "/api/tarefas" as const;
 
         export const InputSchema = z4.object({
             data: z4.object({
-                tarefa: z4.object({
-                    usuario_id: z4.string(),
-                    lista_id: z4.string(),
+                filtro: z4.object({
+                    pagina: z4.number().min(1).max(30),
                 }),
             }),
         }).strict();
@@ -51,8 +50,8 @@ namespace TypesTarefa {
         export type Output = { data: { tarefas: Base[] } };
     }
 
-    export namespace DeletarPeloUsuarioId {
-        export const route = "/api/usuario/:usuario_id/lista/:lista_id/tarefa/:tarefa_id" as const;
+    export namespace DeletarPeloId {
+        export const route = "/api/tarefa/:id" as const;
 
         export const InputSchema = z4.object({
             data: z4.object({
@@ -68,8 +67,8 @@ namespace TypesTarefa {
         export type Output = { message: string };
     }
 
-    export namespace AtualizarPeloUsuarioId {
-        export const route = "/api/usuario/:usuario_id/lista/:lista_id/tarefa/:tarefa_id" as const;
+    export namespace AtualizarPeloId {
+        export const route = "/api/tarefa/:id" as const;
 
         export const InputSchema = z4.object({
             data: z4.object({

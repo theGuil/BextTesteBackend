@@ -1,17 +1,17 @@
 import {
     schema_lista,
     ListaSelect,
-    ListaBuscarPeloUsuarioId,
-    ListaCriarPeloUsuarioId,
-    ListaAtualizarPeloUsuarioId,
-    ListaDeletarPeloUsuarioId
+    ListaBuscarPeloFiltro,
+    ListaCriar,
+    ListaAtualizarPeloId,
+    ListaDeletarPeloId
 } from "../schema/schema_lista";
 
 import helpers from "../helpers/helpers";
 
 export default class model_lista {
 
-    static async buscar_pelo_usuario_id(props: ListaBuscarPeloUsuarioId): Promise<ListaSelect[]> {
+    static async buscar_pelo_filtro(props: ListaBuscarPeloFiltro): Promise<ListaSelect[]> {
         try {
             return await schema_lista.find({ usuario_id: props.usuario_id }).lean<ListaSelect[]>();
         } catch (error) {
@@ -19,7 +19,7 @@ export default class model_lista {
         }
     }
 
-    static async criar_pelo_usuario_id(props: ListaCriarPeloUsuarioId): Promise<ListaSelect> {
+    static async criar(props: ListaCriar): Promise<ListaSelect> {
         try {
             const set_nova_lista = new schema_lista(props);
             return await set_nova_lista.save();
@@ -28,7 +28,7 @@ export default class model_lista {
         }
     }
 
-    static async atualizar_pelo_usuario_id(props: ListaAtualizarPeloUsuarioId): Promise<ListaSelect> {
+    static async atualizar_pelo_id(props: ListaAtualizarPeloId): Promise<ListaSelect> {
         try {
             const { _id, usuario_id, ...campos } = props;
 
@@ -42,7 +42,7 @@ export default class model_lista {
         }
     }
 
-    static async deletar_pelo_usuario_id(props: ListaDeletarPeloUsuarioId): Promise<void> {
+    static async deletar_pelo_id(props: ListaDeletarPeloId): Promise<void> {
         try {
             await schema_lista.findOneAndDelete({ _id: props._id, usuario_id: props.usuario_id });
         } catch (error) {

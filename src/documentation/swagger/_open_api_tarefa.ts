@@ -5,7 +5,7 @@ import z4 from "zod/v4";
 export const registerTarefaRoutes = (registry: OpenAPIRegistry) => {
     registry.registerPath({
         method: "post",
-        path: t.Entidades.Tarefa.CriarPeloUsuarioId.route,
+        path: t.Entidades.Tarefa.Criar.route,
         summary: "Criar tarefa do usuário",
         tags: ["Tarefa"],
         security: [{ BearerAuth: [] }],
@@ -15,7 +15,7 @@ export const registerTarefaRoutes = (registry: OpenAPIRegistry) => {
                 lista_id: z4.string()
             }),
             body: {
-                content: { "application/json": { schema: t.Entidades.Tarefa.CriarPeloUsuarioId.InputSchema } }
+                content: { "application/json": { schema: t.Entidades.Tarefa.Criar.InputSchema } }
             }
         },
         responses: {
@@ -27,7 +27,7 @@ export const registerTarefaRoutes = (registry: OpenAPIRegistry) => {
 
     registry.registerPath({
         method: "get",
-        path: t.Entidades.Tarefa.BuscarPeloUsuarioId.route,
+        path: t.Entidades.Tarefa.BuscarPeloFiltro.route,
         summary: "Buscar tarefas do usuário",
         tags: ["Tarefa"],
         security: [{ BearerAuth: [] }],
@@ -45,7 +45,7 @@ export const registerTarefaRoutes = (registry: OpenAPIRegistry) => {
 
     registry.registerPath({
         method: "patch",
-        path: t.Entidades.Tarefa.AtualizarPeloUsuarioId.route,
+        path: t.Entidades.Tarefa.AtualizarPeloId.route,
         summary: "Atualizar tarefa do usuário",
         tags: ["Tarefa"],
         security: [{ BearerAuth: [] }],
@@ -56,7 +56,7 @@ export const registerTarefaRoutes = (registry: OpenAPIRegistry) => {
                 tarefa_id: z4.string()
             }),
             body: {
-                content: { "application/json": { schema: t.Entidades.Tarefa.AtualizarPeloUsuarioId.InputSchema } }
+                content: { "application/json": { schema: t.Entidades.Tarefa.AtualizarPeloId.InputSchema } }
             }
         },
         responses: {
@@ -68,7 +68,7 @@ export const registerTarefaRoutes = (registry: OpenAPIRegistry) => {
 
     registry.registerPath({
         method: "delete",
-        path: t.Entidades.Tarefa.DeletarPeloUsuarioId.route,
+        path: t.Entidades.Tarefa.DeletarPeloId.route,
         summary: "Deletar tarefa do usuário",
         tags: ["Tarefa"],
         security: [{ BearerAuth: [] }],

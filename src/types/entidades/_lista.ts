@@ -11,13 +11,12 @@ namespace TypesLista {
 
     export type Base = z4.infer<typeof schemaBase>;
 
-    export namespace CriarPeloUsuarioId {
-        export const route = "/api/usuario/:usuario_id/lista" as const;
+    export namespace Criar {
+        export const route = "/api/lista" as const;
 
         export const InputSchema = z4.object({
             data: z4.object({
                 lista: z4.object({
-                    usuario_id: z4.string(),
                     nome: z4.string().min(3),
                 }),
             }),
@@ -32,13 +31,14 @@ namespace TypesLista {
         };
     }
 
-    export namespace BuscarPeloUsuarioId {
-        export const route = "/api/usuario/:usuario_id/listas" as const;
+    export namespace BuscarPeloFiltro {
+        export const route = "/api/listas" as const;
 
         export const InputSchema = z4.object({
             data: z4.object({
-                lista: z4.object({
-                    usuario_id: z4.string()
+                filtros: z4.object({
+                    pagina: z4.number().min(0).max(10),
+                    nome: z4.string()
                 }),
             }),
         }).strict();
@@ -52,14 +52,13 @@ namespace TypesLista {
         };
     }
 
-    export namespace DeletarPeloUsuarioId {
-        export const route = "/api/usuario/:usuario_id/lista/:lista_id" as const;
+    export namespace DeletarPeloId {
+        export const route = "/api/lista/:id" as const;
 
         export const InputSchema = z4.object({
             data: z4.object({
                 lista: z4.object({
                     _id: z4.string(),
-                    usuario_id: z4.string()
                 }),
             }),
         }).strict();
@@ -71,14 +70,13 @@ namespace TypesLista {
         };
     }
 
-    export namespace AtualizarPeloUsuarioId {
-        export const route = "/api/usuario/:usuario_id/lista/:lista_id" as const;
+    export namespace AtualizarPeloId {
+        export const route = "/api/lista/:id" as const;
 
         export const InputSchema = z4.object({
             data: z4.object({
                 lista: z4.object({
                     _id: z4.string(),
-                    usuario_id: z4.string(),
                     nome: z4.string().min(3).optional(),
                 }),
             }),

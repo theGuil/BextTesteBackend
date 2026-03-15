@@ -12,13 +12,13 @@ export type ListaSelect = Omit<InferSchemaType<typeof set_schema_lista>, 'usuari
     createdAt: Date;
 };
 
-export type ListaBuscarPeloUsuarioId = Pick<ListaSelect, "usuario_id">;
+export type ListaBuscarPeloFiltro = Pick<ListaSelect, "usuario_id">;
 
-export type ListaCriarPeloUsuarioId = Pick<ListaSelect, "usuario_id" | "nome">;
+export type ListaCriar = Pick<ListaSelect, "usuario_id" | "nome">;
 
-export type ListaAtualizarPeloUsuarioId = Pick<ListaSelect, "_id" | "usuario_id"> &
+export type ListaAtualizarPeloId = Pick<ListaSelect, "_id" | "usuario_id"> &
     Partial<Pick<ListaSelect, "nome">> & {};
 
-export type ListaDeletarPeloUsuarioId = Pick<ListaSelect, "_id" | "usuario_id">;
+export type ListaDeletarPeloId = Pick<ListaSelect, "_id" | "usuario_id">;
 
 export const schema_lista = model<ListaSelect>('lista', set_schema_lista);
