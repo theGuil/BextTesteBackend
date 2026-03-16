@@ -4,6 +4,8 @@
 
 Antes de iniciar o projeto, é obrigatório rodar os comandos abaixo para preparar o ambiente:
 
+**0. Node.js na versão: ^24**
+
 **1. Instalar as dependências:**
 
 ```bash
