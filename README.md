@@ -66,6 +66,8 @@ Quando o projeto estiver rodando localmente, você pode acessar a documentação
 
 Desenvolvi o backend seguindo os princípios de **Clean Architecture** e partes do **DDD**.
 
+A paginação nas listas e tarefas foi idealizada para casos onde ambas podem crescer exponencialmente. Em casos onde tarefas e listas costumam ser pequenas, o ideal seria utilizar o populate do MongoDB e trazer tudo no mesmo JSON.
+
 Para as Tarefas eu adicionei um limite de 30 itens por requisição e paginei para não sobrecarregar o banco de dados.
 
 Para as Listas também adicionei um limite na busca de 10 itens e paginei o restante também para evitar sobrecarga.
