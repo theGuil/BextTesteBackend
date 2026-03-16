@@ -14,7 +14,7 @@ namespace TypesLista {
     export namespace Criar {
         export const route = "/api/lista" as const;
 
-        export const InputSchema = z4.object({
+        export const body = z4.object({
             data: z4.object({
                 lista: z4.object({
                     nome: z4.string().min(3),
@@ -22,7 +22,7 @@ namespace TypesLista {
             }),
         }).strict();
 
-        export type Input = z4.infer<typeof InputSchema>;
+        export type Input = z4.infer<typeof body>;
 
         export type Output = {
             data: {
@@ -34,16 +34,13 @@ namespace TypesLista {
     export namespace BuscarPeloFiltro {
         export const route = "/api/listas" as const;
 
-        export const InputSchema = z4.object({
-            data: z4.object({
-                filtros: z4.object({
-                    pagina: z4.number().min(0).max(10),
-                    nome: z4.string().optional()
-                }).strict(),
-            }),
+        export const query = z4.object({
+            pagina: z4.coerce.number().min(1).max(10).optional().default(1).optional(),
+            _id: z4.string().optional(),
+            nome: z4.string().optional(),
         }).strict();
 
-        export type Input = z4.infer<typeof InputSchema>;
+        export type Input = z4.infer<typeof query>;
 
         export type Output = {
             data: {
@@ -55,15 +52,12 @@ namespace TypesLista {
     export namespace DeletarPeloId {
         export const route = "/api/lista/:id" as const;
 
-        export const InputSchema = z4.object({
-            data: z4.object({
-                lista: z4.object({
-                    _id: z4.string(),
-                }),
-            }),
-        }).strict();
+        export const params = z4.object({
+            id: z4.string(),
+        })
 
-        export type Input = z4.infer<typeof InputSchema>;
+
+        export type Input = z4.infer<typeof params>;
 
         export type Output = {
             message: string;
@@ -73,16 +67,22 @@ namespace TypesLista {
     export namespace AtualizarPeloId {
         export const route = "/api/lista/:id" as const;
 
-        export const InputSchema = z4.object({
+        export const params = z4.object({
+            id: z4.string(),
+        })
+
+        export const body = z4.object({
             data: z4.object({
                 lista: z4.object({
-                    _id: z4.string(),
                     nome: z4.string().min(3).optional(),
                 }),
             }),
         }).strict();
 
-        export type Input = z4.infer<typeof InputSchema>;
+
+        export type Params = z4.infer<typeof params>;
+
+        export type Input = z4.infer<typeof body>;
 
         export type Output = {
             data: {
@@ -94,16 +94,11 @@ namespace TypesLista {
     export namespace BuscarPeloId {
         export const route = "/api/lista/:id" as const;
 
-        export const InputSchema = z4.object({
-            data: z4.object({
-                lista: z4.object({
-                    _id: z4.string(),
+        export const params = z4.object({
+            id: z4.string(),
+        })
 
-                }),
-            }),
-        }).strict();
-
-        export type Input = z4.infer<typeof InputSchema>;
+        export type Input = z4.infer<typeof params>;
 
         export type Output = {
             data: {

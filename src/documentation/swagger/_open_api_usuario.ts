@@ -9,7 +9,7 @@ export const registerUsuarioRoutes = (registry: OpenAPIRegistry) => {
         tags: ["Usuário"],
         request: {
             body: {
-                content: { "application/json": { schema: t.Entidades.Usuario.Register.InputSchema } }
+                content: { "application/json": { schema: t.Entidades.Usuario.Register.body } }
             }
         },
         responses: {
@@ -25,7 +25,7 @@ export const registerUsuarioRoutes = (registry: OpenAPIRegistry) => {
         tags: ["Usuário"],
         request: {
             body: {
-                content: { "application/json": { schema: t.Entidades.Usuario.Login.InputSchema } }
+                content: { "application/json": { schema: t.Entidades.Usuario.Login.body } }
             }
         },
         responses: {

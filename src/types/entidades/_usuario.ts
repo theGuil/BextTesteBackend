@@ -19,7 +19,7 @@ namespace TypesUsuario {
     export namespace Register {
         export const route = "/api/usuario/register" as const;
 
-        export const InputSchema = z4.object({
+        export const body = z4.object({
             data: z4.object({
                 usuario: z4.object({
                     name: z4.string().min(3),
@@ -33,7 +33,7 @@ namespace TypesUsuario {
             }),
         }).strict();
 
-        export type Input = z4.infer<typeof InputSchema>;
+        export type Input = z4.infer<typeof body>;
 
         export type Output = {
             data: {
@@ -45,7 +45,7 @@ namespace TypesUsuario {
     export namespace Login {
         export const route = "/api/usuario/login" as const;
 
-        export const InputSchema = z4.object({
+        export const body = z4.object({
             data: z4.object({
                 usuario: z4.object({
                     email: z4.email(),
@@ -54,7 +54,7 @@ namespace TypesUsuario {
             }),
         }).strict();
 
-        export type Input = z4.infer<typeof InputSchema>;
+        export type Input = z4.infer<typeof body>;
 
         export type Output = {
             data: {

@@ -11,7 +11,7 @@ export default class use_case_tarefa_buscar_pelo_filtro {
     constructor(props: t.Entidades.Tarefa.BuscarPeloFiltro.Input, usuario_auth: t.Entidades.Usuario.UsuarioAuth) {
         this.domain_tarefa = new domain_tarefa(usuario_auth)
 
-        this.filtro = t.Entidades.Tarefa.BuscarPeloFiltro.InputSchema.parse(props).data.filtro;
+        this.filtro = t.Entidades.Tarefa.BuscarPeloFiltro.body.parse(props).data.filtro;
     }
 
     async factory(): Promise<t.Entidades.Tarefa.BuscarPeloFiltro.Output> {

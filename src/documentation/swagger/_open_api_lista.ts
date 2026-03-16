@@ -1,6 +1,5 @@
 import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
 import t from "../../types/entidades";
-import z4 from "zod/v4";
 
 export const registerListaRoutes = (registry: OpenAPIRegistry) => {
     registry.registerPath({
@@ -10,11 +9,10 @@ export const registerListaRoutes = (registry: OpenAPIRegistry) => {
         tags: ["Lista"],
         security: [{ BearerAuth: [] }],
         request: {
-            params: z4.object({ usuario_id: z4.string() }),
             body: {
                 content: {
                     "application/json": {
-                        schema: t.Entidades.Lista.Criar.InputSchema
+                        schema: t.Entidades.Lista.Criar.body
                     }
                 }
             }
@@ -33,7 +31,7 @@ export const registerListaRoutes = (registry: OpenAPIRegistry) => {
         tags: ["Lista"],
         security: [{ BearerAuth: [] }],
         request: {
-            params: z4.object({ usuario_id: z4.string() }),
+            query: t.Entidades.Lista.BuscarPeloFiltro.query,
         },
         responses: {
             200: { description: "Listas encontradas com sucesso" },
@@ -44,20 +42,17 @@ export const registerListaRoutes = (registry: OpenAPIRegistry) => {
 
     registry.registerPath({
         method: "patch",
-        path: t.Entidades.Lista.AtualizarPeloId.route,
+        path: t.Entidades.Lista.AtualizarPeloId.route.replace(':id', '{id}'),
         summary: "Atualizar lista do usuário",
         description: "Atualiza a lista do usuário pelo id dele que está no token!",
         tags: ["Lista"],
         security: [{ BearerAuth: [] }],
         request: {
-            params: z4.object({
-                usuario_id: z4.string(),
-                lista_id: z4.string()
-            }),
+            params: t.Entidades.Lista.AtualizarPeloId.params,
             body: {
                 content: {
                     "application/json": {
-                        schema: t.Entidades.Lista.AtualizarPeloId.InputSchema
+                        schema: t.Entidades.Lista.AtualizarPeloId.body
                     }
                 }
             }
@@ -71,16 +66,13 @@ export const registerListaRoutes = (registry: OpenAPIRegistry) => {
 
     registry.registerPath({
         method: "delete",
-        path: t.Entidades.Lista.DeletarPeloId.route,
+        path: t.Entidades.Lista.DeletarPeloId.route.replace(':id', '{id}'),
         summary: "Deletar lista do usuário",
         description: "Remove uma lista permanentemente. A lista deve estar vazia (sem tarefas) para ser deletada.",
         tags: ["Lista"],
         security: [{ BearerAuth: [] }],
         request: {
-            params: z4.object({
-                usuario_id: z4.string(),
-                lista_id: z4.string()
-            })
+            params: t.Entidades.Lista.DeletarPeloId.params
         },
         responses: {
             200: { description: "Lista deletada com sucesso" },

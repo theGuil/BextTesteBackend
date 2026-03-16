@@ -15,7 +15,7 @@ export const registerTarefaRoutes = (registry: OpenAPIRegistry) => {
                 lista_id: z4.string()
             }),
             body: {
-                content: { "application/json": { schema: t.Entidades.Tarefa.Criar.InputSchema } }
+                content: { "application/json": { schema: t.Entidades.Tarefa.Criar.body } }
             }
         },
         responses: {
@@ -56,7 +56,7 @@ export const registerTarefaRoutes = (registry: OpenAPIRegistry) => {
                 tarefa_id: z4.string()
             }),
             body: {
-                content: { "application/json": { schema: t.Entidades.Tarefa.AtualizarPeloId.InputSchema } }
+                content: { "application/json": { schema: t.Entidades.Tarefa.AtualizarPeloId.body } }
             }
         },
         responses: {

@@ -18,7 +18,7 @@ namespace TypesTarefa {
     export namespace Criar {
         export const route = "/api/tarefa" as const;
 
-        export const InputSchema = z4.object({
+        export const body = z4.object({
             data: z4.object({
                 tarefa: z4.object({
                     lista_id: z4.string(),
@@ -30,14 +30,14 @@ namespace TypesTarefa {
             }),
         }).strict();
 
-        export type Input = z4.infer<typeof InputSchema>;
+        export type Input = z4.infer<typeof body>;
         export type Output = { data: { tarefa: Base } };
     }
 
     export namespace BuscarPeloFiltro {
         export const route = "/api/tarefas" as const;
 
-        export const InputSchema = z4.object({
+        export const body = z4.object({
             data: z4.object({
                 filtro: z4.object({
                     pagina: z4.number().min(1).max(30),
@@ -51,14 +51,14 @@ namespace TypesTarefa {
             }).strict(),
         }).strict();
 
-        export type Input = z4.infer<typeof InputSchema>;
+        export type Input = z4.infer<typeof body>;
         export type Output = { data: { tarefas: Base[] } };
     }
 
     export namespace DeletarPeloId {
         export const route = "/api/tarefa/:id" as const;
 
-        export const InputSchema = z4.object({
+        export const body = z4.object({
             data: z4.object({
                 tarefa: z4.object({
                     _id: z4.string(),
@@ -66,14 +66,14 @@ namespace TypesTarefa {
             }),
         }).strict();
 
-        export type Input = z4.infer<typeof InputSchema>;
+        export type Input = z4.infer<typeof body>;
         export type Output = { message: string };
     }
 
     export namespace AtualizarPeloId {
         export const route = "/api/tarefa/:id" as const;
 
-        export const InputSchema = z4.object({
+        export const body = z4.object({
             data: z4.object({
                 tarefa: z4.object({
                     _id: z4.string(),
@@ -85,7 +85,7 @@ namespace TypesTarefa {
             }),
         }).strict();
 
-        export type Input = z4.infer<typeof InputSchema>;
+        export type Input = z4.infer<typeof body>;
         export type Output = { data: { tarefa: Base } };
     }
 }

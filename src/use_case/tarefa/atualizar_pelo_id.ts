@@ -7,7 +7,7 @@ export default class use_case_tarefa_atualizar_pelo_id {
     private domain_tarefa: InstanceType<typeof domain_tarefa>;
     constructor(props: t.Entidades.Tarefa.AtualizarPeloId.Input, usuario_auth: t.Entidades.Usuario.UsuarioAuth) {
         this.domain_tarefa = new domain_tarefa(usuario_auth)
-        this.tarefa = t.Entidades.Tarefa.AtualizarPeloId.InputSchema.parse(props).data.tarefa;
+        this.tarefa = t.Entidades.Tarefa.AtualizarPeloId.body.parse(props).data.tarefa;
     }
 
     async factory(): Promise<t.Entidades.Tarefa.AtualizarPeloId.Output> {

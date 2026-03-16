@@ -9,13 +9,30 @@ import {
 
 import helpers from "../helpers/helpers";
 
+import t from "../types/entidades";
+
 export default class model_lista {
 
-    static async buscar_pelo_filtro(props: ListaBuscarPeloFiltro): Promise<ListaSelect[]> {
+    static async buscar_pelo_filtro(props: t.Entidades.Lista.BuscarPeloFiltro.Input & { usuario_id: string }): Promise<ListaSelect[]> {
         try {
-            return await schema_lista.find({ usuario_id: props.usuario_id }).lean<ListaSelect[]>();
+            const query: any = { usuario_id: props.usuario_id };
+
+            if (props._id) query._id = props._id;
+            if (props.nome) query.nome = { $regex: props.nome, $options: 'i' };
+
+            const limite = 30;
+
+            const p = props.pagina || 1;
+            const pular = (p - 1) * limite;
+
+            return await schema_lista
+                .find(query)
+                .skip(pular)
+                .limit(limite)
+                .lean<ListaSelect[]>();
+
         } catch (error) {
-            helpers.set_response.err.DB_ERROR({ message: "Erro ao buscar listas pelo ID do usuário!" });
+            helpers.set_response.err.DB_ERROR({ message: "Erro ao buscar listas pelo filtro!" });
         }
     }
 

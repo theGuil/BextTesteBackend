@@ -8,7 +8,7 @@ const use_case_usuario_register = class use_case_usuario_register {
     private usuario: t.Entidades.Usuario.Register.Input['data']['usuario']
 
     constructor(usuario: t.Entidades.Usuario.Register.Input) {
-        this.usuario = t.Entidades.Usuario.Register.InputSchema.parse(usuario).data.usuario
+        this.usuario = t.Entidades.Usuario.Register.body.parse(usuario).data.usuario
     }
 
 

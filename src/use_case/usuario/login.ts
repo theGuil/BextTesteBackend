@@ -7,7 +7,7 @@ const use_case_usuario_login = class use_case_usuario_login {
     private login: t.Entidades.Usuario.Login.Input['data']['usuario']
 
     constructor(usuario: t.Entidades.Usuario.Login.Input) {
-        this.login = t.Entidades.Usuario.Login.InputSchema.parse(usuario).data.usuario
+        this.login = t.Entidades.Usuario.Login.body.parse(usuario).data.usuario
     }
 
     public async factory(): Promise<t.Entidades.Usuario.Register.Output> {

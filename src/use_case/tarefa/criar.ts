@@ -13,7 +13,7 @@ export default class use_case_tarefa_criar {
     private domain_lista: InstanceType<typeof domain_lista>;
 
     constructor(props: t.Entidades.Tarefa.Criar.Input, usuario_auth: t.Entidades.Usuario.UsuarioAuth) {
-        this.tarefa = t.Entidades.Tarefa.Criar.InputSchema.parse(props).data.tarefa;
+        this.tarefa = t.Entidades.Tarefa.Criar.body.parse(props).data.tarefa;
         this.domain_tarefa = new domain_tarefa(usuario_auth)
         this.domain_lista = new domain_lista(usuario_auth)
     }
