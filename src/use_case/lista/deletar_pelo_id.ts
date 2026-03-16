@@ -29,7 +29,6 @@ export default class use_case_lista_deletar_pelo_id {
 
         await model_lista.deletar_pelo_id({
             _id: this.params.id,
-            usuario_id: this.USUARIO_AUTH._id // Como o id do usuário já vem do token en não do body, não precisaria de domain para validar
         });
 
         return {

@@ -28,6 +28,6 @@ export type ListaCriar = Pick<ListaSelect, "usuario_id" | "nome">;
 export type ListaAtualizarPeloId = Pick<ListaSelect, "_id" | "usuario_id"> &
     Partial<Pick<ListaSelect, "nome">> & {};
 
-export type ListaDeletarPeloId = Pick<ListaSelect, "_id" | "usuario_id">;
+export type ListaDeletarPeloId = Pick<ListaSelect, "_id">;
 
 export const schema_lista = model<ListaSelect>('lista', set_schema_lista);

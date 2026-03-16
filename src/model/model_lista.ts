@@ -69,7 +69,7 @@ export default class model_lista {
 
     static async deletar_pelo_id(props: ListaDeletarPeloId): Promise<void> {
         try {
-            await schema_lista.findOneAndDelete({ _id: props._id, usuario_id: props.usuario_id });
+            await schema_lista.findOneAndDelete({ _id: props._id });
         } catch (error) {
             helpers.set_response.err.DB_ERROR({ message: "Erro ao deletar lista!" });
         }
