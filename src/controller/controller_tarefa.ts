@@ -9,17 +9,8 @@ const controller_tarefa = new class controller_tarefa {
 
     public async buscar_pelo_filtro(req: Request, res: Response) {
         try {
-            const { pagina } = req.query;
 
-
-            const results = await new use_case_tarefa_buscar_pelo_filtro({
-                data: {
-                    filtro: {
-                        pagina: pagina ? Number(pagina) : 1,
-                        ...req.query
-                    }
-                }
-            }, req.usuario_auth).factory();
+            const results = await new use_case_tarefa_buscar_pelo_filtro(req.query, req.usuario_auth).factory();
 
             return helpers.set_response.res.SUCCESS({ res, message: "Tarefas encontradas com sucesso!", results });
         } catch (error) {
@@ -40,16 +31,8 @@ const controller_tarefa = new class controller_tarefa {
 
     public async atualizar_pelo_id(req: Request, res: Response) {
         try {
-            const { id } = req.params;
 
-            const results = await new use_case_tarefa_atualizar_pelo_id({
-                data: {
-                    tarefa: {
-                        _id: String(id),
-                        ...req.body?.data?.tarefa,
-                    }
-                }
-            }, req.usuario_auth).factory();
+            const results = await new use_case_tarefa_atualizar_pelo_id(req.body, req.params, req.usuario_auth).factory();
 
             return helpers.set_response.res.SUCCESS({ res, message: "Tarefa atualizada com sucesso!", results });
         } catch (error) {
@@ -59,15 +42,8 @@ const controller_tarefa = new class controller_tarefa {
 
     public async deletar_pelo_id(req: Request, res: Response) {
         try {
-            const { id } = req.params;
 
-            const results = await new use_case_tarefa_deletar_pelo_id({
-                data: {
-                    tarefa: {
-                        _id: String(id),
-                    }
-                }
-            }, req.usuario_auth).factory();
+            const results = await new use_case_tarefa_deletar_pelo_id(req.params, req.usuario_auth).factory();
 
             return helpers.set_response.res.SUCCESS({ res, message: "Tarefa removida com sucesso!", results });
         } catch (error) {

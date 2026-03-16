@@ -1,6 +1,6 @@
 import t from "../types/entidades"
 import helpers from "../helpers/helpers"
-
+import { Types } from "mongoose";
 import { TarefaSelect } from "../schema/schema_tarefa";
 
 const domain_tarefa = class domain_tarefa {
@@ -13,14 +13,15 @@ const domain_tarefa = class domain_tarefa {
     public verificar_se_encontrou_algo(lista: TarefaSelect) {
 
         if (!lista?._id) {
-            helpers.set_response.err.DOMAIN_ERROR({ message: "Lista não encontrada!" })
+            helpers.set_response.err.DOMAIN_ERROR({ message: "Tarefa não encontrada!" })
         }
     }
 
 
     public verificar_se_pertence_ao_usuario_auth(tarefa: TarefaSelect) {
+        const tarefa_usuario_id = new Types.ObjectId(String(tarefa.usuario_id)).toString();
 
-        if (tarefa.usuario_id !== this.USUARIO_AUTH._id) {
+        if (tarefa_usuario_id !== this.USUARIO_AUTH._id) {
             helpers.set_response.err.DOMAIN_ERROR({ message: "Tarefa não pertence a este usuário!" })
         }
     }

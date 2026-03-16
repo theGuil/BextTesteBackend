@@ -1,5 +1,4 @@
 import z4 from "zod/v4";
-import { Types } from 'mongoose';
 
 
 namespace TypesUsuario {

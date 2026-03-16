@@ -1,6 +1,5 @@
 import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
 import t from "../../types/entidades";
-import z4 from "zod/v4";
 
 export const registerTarefaRoutes = (registry: OpenAPIRegistry) => {
     registry.registerPath({
@@ -10,10 +9,6 @@ export const registerTarefaRoutes = (registry: OpenAPIRegistry) => {
         tags: ["Tarefa"],
         security: [{ BearerAuth: [] }],
         request: {
-            params: z4.object({
-                usuario_id: z4.string(),
-                lista_id: z4.string()
-            }),
             body: {
                 content: { "application/json": { schema: t.Entidades.Tarefa.Criar.body } }
             }
@@ -32,10 +27,7 @@ export const registerTarefaRoutes = (registry: OpenAPIRegistry) => {
         tags: ["Tarefa"],
         security: [{ BearerAuth: [] }],
         request: {
-            params: z4.object({
-                usuario_id: z4.string(),
-                lista_id: z4.string()
-            }),
+            query: t.Entidades.Tarefa.BuscarPeloFiltro.query,
         },
         responses: {
             200: { description: "Tarefas encontradas com sucesso" },
@@ -45,16 +37,12 @@ export const registerTarefaRoutes = (registry: OpenAPIRegistry) => {
 
     registry.registerPath({
         method: "patch",
-        path: t.Entidades.Tarefa.AtualizarPeloId.route,
+        path: t.Entidades.Tarefa.AtualizarPeloId.route.replace(':id', '{id}'),
         summary: "Atualizar tarefa do usuário",
         tags: ["Tarefa"],
         security: [{ BearerAuth: [] }],
         request: {
-            params: z4.object({
-                usuario_id: z4.string(),
-                lista_id: z4.string(),
-                tarefa_id: z4.string()
-            }),
+            params: t.Entidades.Tarefa.AtualizarPeloId.params,
             body: {
                 content: { "application/json": { schema: t.Entidades.Tarefa.AtualizarPeloId.body } }
             }
@@ -68,16 +56,12 @@ export const registerTarefaRoutes = (registry: OpenAPIRegistry) => {
 
     registry.registerPath({
         method: "delete",
-        path: t.Entidades.Tarefa.DeletarPeloId.route,
+        path: t.Entidades.Tarefa.DeletarPeloId.route.replace(':id', '{id}'),
         summary: "Deletar tarefa do usuário",
         tags: ["Tarefa"],
         security: [{ BearerAuth: [] }],
         request: {
-            params: z4.object({
-                usuario_id: z4.string(),
-                lista_id: z4.string(),
-                tarefa_id: z4.string()
-            })
+            params: t.Entidades.Tarefa.DeletarPeloId.params
         },
         responses: {
             200: { description: "Tarefa deletada com sucesso" },

@@ -6,12 +6,13 @@ import {
     TarefaDeletarPeloId
 } from "../schema/schema_tarefa";
 import helpers from "../helpers/helpers";
+import { Schema } from "mongoose";
 
 import t from "../types/entidades";
 
 export default class model_tarefa {
 
-    static async buscar_pelo_filtro(props: t.Entidades.Tarefa.BuscarPeloFiltro.Input['data']['filtro'] & { usuario_id: string }): Promise<TarefaSelect[]> {
+    static async buscar_pelo_filtro(props: t.Entidades.Tarefa.BuscarPeloFiltro.Input & { usuario_id: string }): Promise<TarefaSelect[]> {
         try {
             const query: any = { usuario_id: props.usuario_id };
 

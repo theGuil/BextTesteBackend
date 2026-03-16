@@ -5,23 +5,26 @@ import t from "../../types/entidades";
 import domain_tarefa from "../../domain/domain_tarefa";
 
 export default class use_case_tarefa_deletar_pelo_id {
-    private tarefa: t.Entidades.Tarefa.DeletarPeloId.Input['data']['tarefa'];
+    private params: t.Entidades.Tarefa.DeletarPeloId.Input
     private domain_tarefa: InstanceType<typeof domain_tarefa>;
 
-    constructor(props: t.Entidades.Tarefa.DeletarPeloId.Input, usuario_auth: t.Entidades.Usuario.UsuarioAuth) {
-        this.tarefa = t.Entidades.Tarefa.DeletarPeloId.body.parse(props).data.tarefa;
+    constructor(
+        params: unknown,
+        usuario_auth: t.Entidades.Usuario.UsuarioAuth
+    ) {
+        this.params = t.Entidades.Tarefa.DeletarPeloId.params.parse(params)
         this.domain_tarefa = new domain_tarefa(usuario_auth)
     }
 
     async factory(): Promise<t.Entidades.Tarefa.DeletarPeloId.Output> {
 
-        const tarefa = await model_tarefa.buscar_pelo_id({ _id: this.tarefa._id })
+        const tarefa = await model_tarefa.buscar_pelo_id({ _id: this.params.id })
 
         this.domain_tarefa.verificar_se_encontrou_algo(tarefa)
 
         this.domain_tarefa.verificar_se_pertence_ao_usuario_auth(tarefa)
 
-        await model_tarefa.deletar_pelo_id({ _id: this.tarefa._id });
+        await model_tarefa.deletar_pelo_id({ _id: this.params.id });
 
         return {
             message: "Tarefa removida com sucesso!"
