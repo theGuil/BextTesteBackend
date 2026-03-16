@@ -3,16 +3,17 @@ import {
     TarefaSelect,
     TarefaCriar,
     TarefaAtualizarPeloId,
+    TarefaBuscarPeloFiltro,
     TarefaDeletarPeloId
 } from "../schema/schema_tarefa";
 import helpers from "../helpers/helpers";
-import { Schema } from "mongoose";
+
 
 import t from "../types/entidades";
 
 export default class model_tarefa {
 
-    static async buscar_pelo_filtro(props: t.Entidades.Tarefa.BuscarPeloFiltro.Input & { usuario_id: string }): Promise<TarefaSelect[]> {
+    static async buscar_pelo_filtro(props: t.Entidades.Tarefa.BuscarPeloFiltro.Input & { usuario_id: string }): Promise<TarefaBuscarPeloFiltro> {
         try {
             const query: any = { usuario_id: props.usuario_id };
 
@@ -27,12 +28,21 @@ export default class model_tarefa {
             const p = props.pagina || 1;
             const pular = (p - 1) * limite;
 
-            return await schema_tarefa
-                .find(query)
-                .skip(pular)
-                .limit(limite)
-                .lean<TarefaSelect[]>();
+            const [results, totalItens] = await Promise.all([
+                schema_tarefa.find(query).skip(pular).limit(limite).lean<TarefaSelect[]>(),
+                schema_tarefa.countDocuments(query)
+            ]);
 
+            return {
+                itens: results,
+                paginacao: {
+                    total_itens: totalItens,
+                    total_paginas: Math.ceil(totalItens / limite),
+                    itens_por_pagina: limite,
+                    total_itens_pagina_atual: results.length,
+                    pagina_atual: p
+                }
+            };
         } catch (error) {
             helpers.set_response.err.DB_ERROR({ message: "Erro ao buscar tarefas pelo filtro!" });
         }

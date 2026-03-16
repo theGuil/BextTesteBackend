@@ -13,24 +13,32 @@ import t from "../types/entidades";
 
 export default class model_lista {
 
-    static async buscar_pelo_filtro(props: t.Entidades.Lista.BuscarPeloFiltro.Input & { usuario_id: string }): Promise<ListaSelect[]> {
+    static async buscar_pelo_filtro(props: t.Entidades.Lista.BuscarPeloFiltro.Input & { usuario_id: string }): Promise<ListaBuscarPeloFiltro> {
         try {
             const query: any = { usuario_id: props.usuario_id };
 
             if (props._id) query._id = props._id;
             if (props.nome) query.nome = { $regex: props.nome, $options: 'i' };
 
-            const limite = 30;
-
+            const limite = 10;
             const p = props.pagina || 1;
             const pular = (p - 1) * limite;
 
-            return await schema_lista
-                .find(query)
-                .skip(pular)
-                .limit(limite)
-                .lean<ListaSelect[]>();
+            const [results, totalItens] = await Promise.all([
+                schema_lista.find(query).skip(pular).limit(limite).lean<ListaSelect[]>(),
+                schema_lista.countDocuments(query)
+            ]);
 
+            return {
+                itens: results,
+                paginacao: {
+                    total_itens: totalItens,
+                    total_paginas: Math.ceil(totalItens / limite),
+                    itens_por_pagina: limite,
+                    total_itens_pagina_atual: results.length,
+                    pagina_atual: p
+                }
+            };
         } catch (error) {
             helpers.set_response.err.DB_ERROR({ message: "Erro ao buscar listas pelo filtro!" });
         }

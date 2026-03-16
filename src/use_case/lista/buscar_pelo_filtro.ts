@@ -16,14 +16,15 @@ export default class use_case_lista_buscar_pelo_filtro {
 
     async factory(): Promise<t.Entidades.Lista.BuscarPeloFiltro.Output> {
 
-        const listas = await model_lista.buscar_pelo_filtro({
+        const results = await model_lista.buscar_pelo_filtro({
             usuario_id: this.USUARIO_AUTH._id,
             ...this.query,
         });
 
         return {
             data: {
-                listas: listas || []
+                paginacao: results.paginacao,
+                listas: results.itens,
             }
         };
     }

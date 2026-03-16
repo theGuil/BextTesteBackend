@@ -29,6 +29,18 @@ export type TarefaCriar = Pick<
     "usuario_id" | "data_vencimento" | "descricao" | "lista_id" | "status" | "titulo"
 >;
 
+
+export type TarefaBuscarPeloFiltro = {
+    itens: TarefaSelect[];
+    paginacao: {
+        total_itens: number;
+        total_paginas: number;
+        itens_por_pagina: number;
+        total_itens_pagina_atual: number;
+        pagina_atual: number;
+    };
+}
+
 export type TarefaAtualizarPeloId = Pick<TarefaSelect, '_id'> &
     Partial<Omit<TarefaSelect, '_id' | 'usuario_id'>> & {};
 

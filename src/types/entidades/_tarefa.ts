@@ -48,7 +48,19 @@ namespace TypesTarefa {
         }).strict();
 
         export type Input = z4.infer<typeof query>;
-        export type Output = { data: { tarefas: Base[] } };
+        export type Output = {
+            data: {
+                tarefas: Base[];
+                paginacao: {
+                    total_itens: number;
+                    total_paginas: number;
+                    itens_por_pagina: number;
+                    total_itens_pagina_atual: number;
+                    pagina_atual: number;
+                };
+
+            }
+        };
     }
 
     export namespace DeletarPeloId {

@@ -12,7 +12,16 @@ export type ListaSelect = Omit<InferSchemaType<typeof set_schema_lista>, 'usuari
     createdAt: Date;
 };
 
-export type ListaBuscarPeloFiltro = Pick<ListaSelect, "usuario_id">;
+export type ListaBuscarPeloFiltro = {
+    itens: ListaSelect[];
+    paginacao: {
+        total_itens: number;
+        total_paginas: number;
+        itens_por_pagina: number;
+        total_itens_pagina_atual: number;
+        pagina_atual: number;
+    };
+}
 
 export type ListaCriar = Pick<ListaSelect, "usuario_id" | "nome">;
 

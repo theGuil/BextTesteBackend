@@ -19,14 +19,15 @@ export default class use_case_tarefa_buscar_pelo_filtro {
 
     async factory(): Promise<t.Entidades.Tarefa.BuscarPeloFiltro.Output> {
 
-        const tarefas = await model_tarefa.buscar_pelo_filtro({
+        const results = await model_tarefa.buscar_pelo_filtro({
             usuario_id: this.domain_tarefa.USUARIO_AUTH._id,
             ...this.query
         });
 
         return {
             data: {
-                tarefas: tarefas || []
+                paginacao: results.paginacao,
+                tarefas: results.itens,
             }
         };
     }

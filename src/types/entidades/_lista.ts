@@ -44,6 +44,13 @@ namespace TypesLista {
 
         export type Output = {
             data: {
+                paginacao: {
+                    total_itens: number;
+                    total_paginas: number;
+                    itens_por_pagina: number;
+                    total_itens_pagina_atual: number;
+                    pagina_atual: number;
+                };
                 listas: Base[];
             };
         };
