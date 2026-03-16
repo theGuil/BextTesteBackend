@@ -64,7 +64,13 @@ Quando o projeto estiver rodando localmente, você pode acessar a documentação
 
 ## 5. Visão Geral do Sistema
 
-Desenvolvi o backend seguindo os princípios de **Clean Architecture** e partes do **DDD** .
+Desenvolvi o backend seguindo os princípios de **Clean Architecture** e partes do **DDD**.
+
+Para as Tarefas eu adicionei um limite de 30 itens por requisição e paginei para não sobrecarregar o banco de dados.
+
+Para as Listas também adicionei um limite na busca de 10 itens e paginei o restante também para evitar sobrecarga.
+
+Todas as rotas são extremamente seguras a ponto do usuário só poder atualizar apenas oque pertence a ele.
 
 ### Fluxo Padrão da Arquitetura Backend
 
